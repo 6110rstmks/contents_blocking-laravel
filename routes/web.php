@@ -1,0 +1,23 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BlackListController;
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+
+Route::post('/return', [BlackListController::class, 'check_block']);
+
+Route::get('/register_page', function() {
+    return view('register');
+});
+
+Route::post('/register', [BlackListController::class, 'register'])
+    ->name('register');
