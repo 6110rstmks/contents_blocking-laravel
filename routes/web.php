@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlackListController;
+use App\Http\Controllers\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,10 +15,31 @@ use App\Http\Controllers\BlackListController;
 |
 */
 
+Route::group([
+    'middleware' => 'guest:web'
+], function() {
 
-Route::get('/register_page', function() {
-    return view('register');
+    
+    Route::get('/', function() {
+        return view('login_page');
+    })->name('login_page');
+    
+    Route::post('/login', [UserController::class, 'login'])
+        ->name('login');
 });
 
-Route::post('/register', [BlackListController::class, 'register'])
+
+Route::group([
+    'middleware' => 'auth:web'
+], function() {
+
+    Route::get('/list', [BlackListController::class, 'list'])
+        ->name('list');
+        
+    Route::get('/register_page', function() {
+        return view('register');
+    })->name('register-page');
+
+    Route::post('/register', [BlackListController::class, 'register'])
     ->name('register');
+});

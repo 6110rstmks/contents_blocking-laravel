@@ -7,12 +7,8 @@
     <title>Document</title>
 </head>
 <body>
-<form action="{{ route('register') }}" method="POST">
-    @csrf
-    <input type="text" name="channel_name" id="">
-    <button>Submit</button>
-</form>
-
-<a href="{{ route('list') }}">List page</a>
+    @foreach($youtube_blackList as $channel_name)
+        <div>{{$channel_name->name}}</div>
+    @endforeach
 </body>
 </html>

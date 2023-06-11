@@ -9,12 +9,22 @@ use Log;
 
 class BlackListController extends Controller
 {
+
+    public function list() {
+
+        $youtbue_blackList = YoutubeChannel::all();
+        return view('list')
+            ->with([
+                'youtube_blackList' => $youtbue_blackList,
+            ]);
+    }
+
     public function register(Request $request) {
         YoutubeChannel::create([
            'name' => $request->channel_name
         ]);
 
-        return view('register');
+        return redirect()->route('register-page');
     }
 
     public function channel_block(Request $request) {
