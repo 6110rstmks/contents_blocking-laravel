@@ -18,4 +18,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/return', [BlackListController::class, 'check_block']);
+
+Route::post('/return', [BlackListController::class, 'channel_block']);
+Route::post('/word', [BlackListController::class, 'word_block']);
+
+

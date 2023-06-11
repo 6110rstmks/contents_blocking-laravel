@@ -13,7 +13,6 @@ use App\Http\Controllers\BlackListController;
 |
 */
 
-Route::post('/return', [BlackListController::class, 'check_block']);
 
 Route::get('/register_page', function() {
     return view('register');
