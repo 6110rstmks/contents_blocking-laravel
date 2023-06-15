@@ -61,30 +61,22 @@ class YoutubeChannelController extends Controller
 
     }
 
-    public function export_channel_name() {
-        $data = YoutubeChannel::all();
-
-        $handle = fopen('export.csv', 'w');
-
-        foreach ($data as $row) {
-            fputcsv($handle, $row->toArray(), ';');
-        }
-
-        fclose($handle);
-    }
-
-    public function export_block_word() {
+    // imported files is must be txt file.
+    public function import_files() {
 
     }
 
     public function download() {
         $path = public_path('dummy.txt');
-        
+
         $fileName = 'youtubechannelname.txt';
 
         $data = fopen($path, "w");
 
         $channel_name_list = YoutubeChannel::all()->pluck('name');
+
+        fwrite($data, "name");
+        fwrite($data, "\n");
 
         foreach($channel_name_list as $channel_name) {
             fwrite($data, $channel_name);
