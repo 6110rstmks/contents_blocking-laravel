@@ -7,7 +7,7 @@ use App\Models\YoutubeChannel;
 
 use Log;
 
-class BlackListController extends Controller
+class YoutubeChannelController extends Controller
 {
 
     public function list() {
@@ -20,6 +20,14 @@ class BlackListController extends Controller
     }
 
     public function register(Request $request) {
+        
+        $request->validate([
+            'name' => 'unique:youtube_channels'
+        ], [
+            'name.unique' => 'This channel_name is already registered.'
+        ]);
+
+
         YoutubeChannel::create([
            'name' => $request->channel_name
         ]);
@@ -54,7 +62,15 @@ class BlackListController extends Controller
     }
 
     public function export_channel_name() {
+        $data = YoutubeChannel::all();
 
+        $handle = fopen('export.csv', 'w');
+
+        foreach ($data as $row) {
+            fputcsv($handle, $row->toArray(), ';');
+        }
+
+        fclose($handle);
     }
 
     public function export_block_word() {

@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BlackListController;
+use App\Http\Controllers\YoutubeChannelController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,7 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::post('/return', [BlackListController::class, 'channel_block']);
-Route::post('/word', [BlackListController::class, 'word_block']);
+Route::post('/return', [YoutubeChannelController::class, 'channel_block']);
+Route::post('/word', [YoutubeChannelController::class, 'word_block']);
 
 

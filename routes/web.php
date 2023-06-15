@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BlackListController;
+use App\Http\Controllers\YoutubeChannelController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -33,13 +33,13 @@ Route::group([
     'middleware' => 'auth:web'
 ], function() {
 
-    Route::get('/list', [BlackListController::class, 'list'])
+    Route::get('/list', [YoutubeChannelController::class, 'list'])
         ->name('list');
         
     Route::get('/register_page', function() {
         return view('register');
     })->name('register-page');
 
-    Route::post('/register', [BlackListController::class, 'register'])
+    Route::post('/register', [YoutubeChannelController::class, 'register'])
     ->name('register');
 });
