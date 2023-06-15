@@ -10,5 +10,8 @@
     @foreach($youtube_blackList as $channel_name)
         <div>{{$channel_name->name}}</div>
     @endforeach
+
+
+    <a href="{{route('download')}}" style="display: block; margin-top:300px; color: red;">CSV import</a>
 </body>
 </html>

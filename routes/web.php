@@ -19,11 +19,11 @@ Route::group([
     'middleware' => 'guest:web'
 ], function() {
 
-    
+
     Route::get('/', function() {
         return view('login_page');
     })->name('login_page');
-    
+
     Route::post('/login', [UserController::class, 'login'])
         ->name('login');
 });
@@ -35,11 +35,14 @@ Route::group([
 
     Route::get('/list', [YoutubeChannelController::class, 'list'])
         ->name('list');
-        
+
     Route::get('/register_page', function() {
         return view('register');
     })->name('register-page');
 
     Route::post('/register', [YoutubeChannelController::class, 'register'])
     ->name('register');
+
+    Route::get('/public-download', [YoutubeChannelController::class, 'download'])
+        ->name('download');
 });

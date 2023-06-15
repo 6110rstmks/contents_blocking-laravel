@@ -12,15 +12,15 @@ class YoutubeChannelController extends Controller
 
     public function list() {
 
-        $youtbue_blackList = YoutubeChannel::all();
+        $youtube_blackList = YoutubeChannel::all();
         return view('list')
             ->with([
-                'youtube_blackList' => $youtbue_blackList,
+                'youtube_blackList' => $youtube_blackList,
             ]);
     }
 
     public function register(Request $request) {
-        
+
         $request->validate([
             'name' => 'unique:youtube_channels'
         ], [
@@ -74,6 +74,24 @@ class YoutubeChannelController extends Controller
     }
 
     public function export_block_word() {
+
+    }
+
+    public function download() {
+        $path = public_path('dummy.txt');
         
+        $fileName = 'youtubechannelname.txt';
+
+        $data = fopen($path, "w");
+
+        $channel_name_list = YoutubeChannel::all()->pluck('name');
+
+        foreach($channel_name_list as $channel_name) {
+            fwrite($data, $channel_name);
+            fwrite($data, "\n");
+        }
+        fclose($data);
+
+        return response()->download($path, $fileName, ['Content-Type: text/plain']);
     }
 }
