@@ -14,7 +14,7 @@
     <input type="text" name="channel_name" id="">
     <button>Submit</button>
 </form>
-<a href="{{ route('Youtube-list') }}">YoutubeBlockChannelList</a>
+<a style="font-size: 30px" href="{{ route('Youtube-list') }}">YoutubeBlockChannelList</a>
 
 
 
@@ -24,7 +24,7 @@
     <input type="text" name="word_name">
     <button>Submit</button>
 </form>
-<a href="{{ route('Word-list') }}">WordChannelList</a>
+<a style="font-size: 30px" href="{{ route('Word-list') }}">WordChannelList</a>
 
 
 <div style="margin-top:100px">

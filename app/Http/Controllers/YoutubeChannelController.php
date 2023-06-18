@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\YoutubeChannel;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\YoutubeChannelsImport;
+use Exception;
+use Storage;
 
 
 
@@ -67,12 +69,40 @@ class YoutubeChannelController extends Controller
 
     // imported files is must be txt file.
     public function import(Request $request) {
-        $file_name = $request->file('image')->getClientOriginalName();
 
-        // Excel::import(new YoutubeChannelsImport, $request->file('file')[0]);
-        $items = (new YoutubeChannelsImport)->toCollection($request->file('file'))[0];
+        if ($request->hasFile('txtFile')) {
+            //拡張子がCSVであるかの確認
+            if ($request->txtFile->getClientOriginalExtension() !== "txt") {
+                throw new Exception('不適切な拡張子です。');
+            }
+            //ファイルの保存
+            $newTxtFileName = $request->file('txtFile')->getClientOriginalName();
+            $request->file('txtFile')->storeAs('public/txt', $newTxtFileName);
+        } else {
+            throw new Exception('txtファイルの取得に失敗しました。');
+        }
 
-        Log::debug($items);
+        $txtFile = Storage::disk('local')->get("public/txt/{$newTxtFileName}");
+        // $csvを元に行単位のコレクション作成。explodeで改行ごとに分解
+        $uploadedData = collect(explode("\n", $txtFile));
+
+
+
+        Log::debug($uploadedData);
+
+        foreach ($uploadedData as $row) {
+
+            if (YoutubeChannel::where('name', $row)->count() > 0 || empty($row)) {
+                continue;
+            }
+            $youtubeChannels = new YoutubeChannel();
+            $youtubeChannels->name = $row;
+            $youtubeChannels->save();
+        }
+
+        // after inserting the dataset
+        Storage::delete('public/txt' . $newTxtFileName);
+
 
         return redirect()->action([YoutubeChannelController::class, 'list']);
 
@@ -81,14 +111,11 @@ class YoutubeChannelController extends Controller
     public function download() {
         $path = public_path('dummy.txt');
 
-        $fileName = 'youtubechannelname.txt';
+        $fileName = 'youtubeChannelName.txt';
 
         $data = fopen($path, "w");
 
         $channel_name_list = YoutubeChannel::all()->pluck('name');
-
-        fwrite($data, "name");
-        fwrite($data, "\n");
 
         foreach($channel_name_list as $channel_name) {
             fwrite($data, $channel_name);

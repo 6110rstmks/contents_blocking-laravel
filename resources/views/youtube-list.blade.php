@@ -16,7 +16,7 @@
 
     <form action="{{route('youtube-csv-import')}}" style="margin-top: 100px" method="POST" enctype="multipart/form-data">
         @csrf
-        <p class="mt-5"><input type="file" name="image"></p>
+        <p class="mt-5"><input type="file" name="txtFile"></p>
         <button>CSV import</button>
     </form>
 </body>
