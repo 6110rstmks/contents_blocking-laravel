@@ -12,6 +12,13 @@
     @endforeach
 
 
+    <a href="{{route('Youtube-list')}}">To YoutubeList</a>
+
+    <form action="{{route('testest')}}" method="POST">
+        <button>sousin</button>
+    </form>
+
+
     <a href="{{route('word-download')}}" style="display: block; margin-top:300px; color: red;">CSV import</a>
 </body>
 </html>

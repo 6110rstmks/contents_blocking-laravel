@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\YoutubeChannelController;
+use App\Http\Controllers\WordController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,7 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::post('/return', [YoutubeChannelController::class, 'channel_block']);
-Route::post('/word', [YoutubeChannelController::class, 'word_block']);
+Route::post('/return', [YoutubeChannelController::class, 'block']);
+Route::post('/word', [WordController::class, 'block']);
 
 

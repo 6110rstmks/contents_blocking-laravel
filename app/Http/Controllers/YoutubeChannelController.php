@@ -41,7 +41,7 @@ class YoutubeChannelController extends Controller
         return redirect()->route('register-page');
     }
 
-    public function channel_block(Request $request) {
+    public function block(Request $request) {
         $videoID = $request->input('videoid');
         $API_KEY = "AIzaSyBNTsy_ilAP1XecHoqTu3CK_23-25G05eU";
         $url = "https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" . $videoID . "&key=" . $API_KEY;
