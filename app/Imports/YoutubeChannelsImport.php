@@ -15,7 +15,7 @@ class YoutubeChannelsImport implements ToModel
     public function model(array $row)
     {
         return new YoutubeChannel([
-            'name'     => $row[0],
+            'name' => $row['name'],
         ]);
     }
 }

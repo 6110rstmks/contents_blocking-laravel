@@ -1,5 +1,2 @@
 name
 株式会社ほえい
-test1
-umai
-かも

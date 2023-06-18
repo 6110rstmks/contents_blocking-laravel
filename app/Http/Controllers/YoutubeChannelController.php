@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\YoutubeChannel;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\YoutubeChannelsImport;
+
+
 
 use Log;
 
@@ -13,7 +17,7 @@ class YoutubeChannelController extends Controller
     public function list() {
 
         $youtube_blackList = YoutubeChannel::all();
-        return view('list')
+        return view('youtube-list')
             ->with([
                 'youtube_blackList' => $youtube_blackList,
             ]);
@@ -62,7 +66,15 @@ class YoutubeChannelController extends Controller
     }
 
     // imported files is must be txt file.
-    public function import_files() {
+    public function import(Request $request) {
+        $file_name = $request->file('image')->getClientOriginalName();
+
+        // Excel::import(new YoutubeChannelsImport, $request->file('file')[0]);
+        $items = (new YoutubeChannelsImport)->toCollection($request->file('file'))[0];
+
+        Log::debug($items);
+
+        return redirect()->action([YoutubeChannelController::class, 'list']);
 
     }
 

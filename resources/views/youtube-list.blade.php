@@ -12,6 +12,12 @@
     @endforeach
 
 
-    <a href="{{route('download')}}" style="display: block; margin-top:300px; color: red;">CSV import</a>
+    <a href="{{route('youtube-download')}}" style="display: block; margin-top:300px; color: red;">CSV Export</a>
+
+    <form action="{{route('youtube-csv-import')}}" style="margin-top: 100px" method="POST" enctype="multipart/form-data">
+        @csrf
+        <p class="mt-5"><input type="file" name="image"></p>
+        <button>CSV import</button>
+    </form>
 </body>
 </html>

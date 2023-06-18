@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\YoutubeChannelController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,16 +34,26 @@ Route::group([
     'middleware' => 'auth:web'
 ], function() {
 
-    Route::get('/list', [YoutubeChannelController::class, 'list'])
-        ->name('list');
+    Route::get('/youtube_list', [YoutubeChannelController::class, 'list'])
+        ->name('Youtube-list');
+
+    Route::get('/word_list', [WordController::class, 'list'])
+        ->name('Word-list');
 
     Route::get('/register_page', function() {
         return view('register');
     })->name('register-page');
 
-    Route::post('/register', [YoutubeChannelController::class, 'register'])
-    ->name('register');
+    Route::post('/register_youtube', [YoutubeChannelController::class, 'register'])
+    ->name('register-youtube');
 
-    Route::get('/public-download', [YoutubeChannelController::class, 'download'])
-        ->name('download');
+    Route::post('/register_word', [WordController::class, 'register'])
+    ->name('register-word');
+
+    Route::get('/youtube_download', [YoutubeChannelController::class, 'download'])
+        ->name('youtube-download');
+
+    Route::post('/youtube-csv-import', [YoutubeChannelController::class, 'import'])
+        ->name('youtube-csv-import');
+    
 });
