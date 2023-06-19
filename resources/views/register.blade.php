@@ -9,6 +9,7 @@
 <body>
 
 @if ($errors->any())
+<!-- <div>{{$errors->first()}}</div> -->
 <div>
   <ul>
     @foreach ($errors->all() as $error)
@@ -38,7 +39,12 @@
 
 
 <div style="margin-top:100px">
-    <a href="">YoutubeAPI REGISTER</a>
+    <h3>YoutubeAPI</h3>
+    <form action="{{ route('register-api') }}" method="POST" >
+        @csrf
+        <input type="text" name="name">
+        <button>Submit</button>
+    </form>
 </div>
 
 </body>

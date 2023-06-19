@@ -25,17 +25,17 @@ class WordController extends Controller
     }
 
     public function register(Request $request) {
-        // $request->validate([
-        //     'name' => 'requied|unique:words'
-        // ]);
-
+        $request->validate([
+            'name' => 'required|unique:words'
+        ]);
 
         Word::create([
-           'name' => $request->word_name
+           'name' => $request->name
         ]);
 
         return redirect()->route('register-page');
     }
+
     public function block(Request $request) {
         $words_in_db = Word::all()->pluck("name");
         $title = $request->input('title');
@@ -52,21 +52,14 @@ class WordController extends Controller
         return 0;
     }
 
+    public function import(Request $request) {
+        $this->blockTarget->import("Word", $request);
+        return redirect()->back();
+    }
+
     public function download() {
-        $path = public_path('dummy.txt');
-
-        $fileName = 'youtubeChannelName.txt';
-
-        $data = fopen($path, "w");
-
-        $name_lists = YoutubeChannel::all()->pluck('name');
-
-        foreach($name_lists as $name) {
-            fwrite($data, $name);
-            fwrite($data, "\n");
-        }
-        fclose($data);
-
+        $path = public_path('/storage/dummy.txt');
+        $fileName = $this->blockTarget->download("Word", $path);
         return response()->download($path, $fileName, ['Content-Type: text/plain']);
     }
 }

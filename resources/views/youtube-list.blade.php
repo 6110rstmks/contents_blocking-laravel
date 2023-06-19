@@ -11,7 +11,6 @@
         <div>{{$channel_name->name}}</div>
     @endforeach
 
-
     <a href="{{route('youtube-download')}}" style="display: block; margin-top:300px; color: red;">CSV Export</a>
 
     <form action="{{route('youtube-csv-import')}}" style="margin-top: 100px" method="POST" enctype="multipart/form-data">

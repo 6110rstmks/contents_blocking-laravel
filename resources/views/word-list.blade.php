@@ -11,14 +11,16 @@
         <div>{{$word_name->name}}</div>
     @endforeach
 
-
     <a href="{{route('Youtube-list')}}">To YoutubeList</a>
 
-    <form action="{{route('testest')}}" method="POST">
-        <button>sousin</button>
+    <a href="{{route('word-download')}}" style="display: block; margin-top:300px; color: red;">CSV Export</a>
+
+    <form action="{{route('word-csv-import')}}" style="margin-top: 100px" method="POST" enctype="multipart/form-data">
+        @csrf
+        <p class="mt-5"><input type="file" name="txtFile"></p>
+        <button>CSV import</button>
     </form>
 
 
-    <a href="{{route('word-download')}}" style="display: block; margin-top:300px; color: red;">CSV import</a>
 </body>
 </html>

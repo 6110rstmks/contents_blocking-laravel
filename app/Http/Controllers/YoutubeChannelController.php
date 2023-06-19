@@ -9,9 +9,6 @@ use App\Imports\YoutubeChannelsImport;
 use Exception;
 use Storage;
 use App\Common\BlockTarget;
-
-
-
 use Log;
 
 class YoutubeChannelController extends Controller
@@ -77,56 +74,13 @@ class YoutubeChannelController extends Controller
 
     // imported files is must be txt file.
     public function import(Request $request) {
-
-        if ($request->hasFile('txtFile')) {
-            //拡張子がCSVであるかの確認
-            if ($request->txtFile->getClientOriginalExtension() !== "txt") {
-                throw new Exception('不適切な拡張子です。');
-            }
-            //ファイルの保存
-            $newTxtFileName = $request->file('txtFile')->getClientOriginalName();
-            $request->file('txtFile')->storeAs('public/txt', $newTxtFileName);
-        } else {
-            throw new Exception('txtファイルの取得に失敗しました。');
-        }
-
-        $txtFile = Storage::disk('local')->get("public/txt/{$newTxtFileName}");
-        // $csvを元に行単位のコレクション作成。explodeで改行ごとに分解
-        $uploadedData = collect(explode("\n", $txtFile));
-
-        foreach ($uploadedData as $row) {
-
-            if (YoutubeChannel::where('name', $row)->count() > 0 || empty($row)) {
-                continue;
-            }
-            $youtubeChannels = new YoutubeChannel();
-            $youtubeChannels->name = $row;
-            $youtubeChannels->save();
-        }
-
-        // after inserting the dataset
-        Storage::delete('public/txt' . $newTxtFileName);
-
-
-        return redirect()->action([YoutubeChannelController::class, 'list']);
-
+        $this->blockTarget->import("YoutubeChannel", $request);
+        return redirect()->back();
     }
 
     public function download() {
         $path = public_path('dummy.txt');
-
-        $fileName = 'youtubeChannelName.txt';
-
-        $data = fopen($path, "w");
-
-        $name_lists = YoutubeChannel::all()->pluck('name');
-
-        foreach($name_lists as $name) {
-            fwrite($data, $name);
-            fwrite($data, "\n");
-        }
-        fclose($data);
-
+        $fileName = $this->blockTarget->download("YoutubeChannel", $path);
         return response()->download($path, $fileName, ['Content-Type: text/plain']);
     }
 }
