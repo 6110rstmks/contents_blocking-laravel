@@ -52,6 +52,8 @@ Route::group([
 
     Route::get('/youtube_download', [YoutubeChannelController::class, 'download'])
         ->name('youtube-download');
+    Route::get('/word_download', [WordController::class, 'download'])
+        ->name('word-download');
 
     Route::post('/youtube-csv-import', [YoutubeChannelController::class, 'import'])
         ->name('youtube-csv-import');
