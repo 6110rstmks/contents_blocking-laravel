@@ -8,6 +8,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\YoutubeChannelsImport;
 use Exception;
 use Storage;
+use App\Common\BlockTarget;
 
 
 
@@ -16,26 +17,29 @@ use Log;
 class YoutubeChannelController extends Controller
 {
 
-    public function list() {
+    protected $blocktarget;
 
-        $youtube_blackList = YoutubeChannel::all();
-        return view('youtube-list')
+    public function __construct(BlockTarget $blocktarget) {
+        $this->blockTarget = $blocktarget;
+    }
+
+    public function list() {
+        $lists = $this->blockTarget->getModel("YoutubeChannel");
+
+        $return_file = 'youtube-list';
+        return view($return_file)
             ->with([
-                'youtube_blackList' => $youtube_blackList,
+                'lists' => $lists,
             ]);
     }
 
     public function register(Request $request) {
-
         $request->validate([
-            'name' => 'unique:youtube_channels'
-        ], [
-            'name.unique' => 'This channel_name is already registered.'
+            'name' => 'required|unique:youtube_channels'
         ]);
 
-
         YoutubeChannel::create([
-           'name' => $request->channel_name
+           'name' => $request->name
         ]);
 
         return redirect()->route('register-page');
@@ -43,6 +47,17 @@ class YoutubeChannelController extends Controller
 
     public function block(Request $request) {
         $videoID = $request->input('videoid');
+
+        $channel_name = getChannelName($videoID);
+        if (YoutubeChannel::where('name', $channel_name)->count() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public function getChannelName($videoID) {
         $API_KEY = "AIzaSyBNTsy_ilAP1XecHoqTu3CK_23-25G05eU";
         $url = "https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" . $videoID . "&key=" . $API_KEY;
         $curl = curl_init();
@@ -57,14 +72,7 @@ class YoutubeChannelController extends Controller
         $items = $data2['items'][0];
 
         $data3 = $items["snippet"];
-        $channel_name = $data3["channelTitle"];
-
-        if (YoutubeChannel::where('name', $channel_name)->count() > 0) {
-            return true;
-        } else {
-            return false;
-        }
-
+        return $data3["channelTitle"];
     }
 
     // imported files is must be txt file.
@@ -85,10 +93,6 @@ class YoutubeChannelController extends Controller
         $txtFile = Storage::disk('local')->get("public/txt/{$newTxtFileName}");
         // $csvを元に行単位のコレクション作成。explodeで改行ごとに分解
         $uploadedData = collect(explode("\n", $txtFile));
-
-
-
-        Log::debug($uploadedData);
 
         foreach ($uploadedData as $row) {
 
@@ -115,10 +119,10 @@ class YoutubeChannelController extends Controller
 
         $data = fopen($path, "w");
 
-        $channel_name_list = YoutubeChannel::all()->pluck('name');
+        $name_lists = YoutubeChannel::all()->pluck('name');
 
-        foreach($channel_name_list as $channel_name) {
-            fwrite($data, $channel_name);
+        foreach($name_lists as $name) {
+            fwrite($data, $name);
             fwrite($data, "\n");
         }
         fclose($data);

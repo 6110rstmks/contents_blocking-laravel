@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    @foreach($youtube_blackList as $channel_name)
+    @foreach($lists as $channel_name)
         <div>{{$channel_name->name}}</div>
     @endforeach
 

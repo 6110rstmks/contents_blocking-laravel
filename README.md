@@ -1,5 +1,1 @@
-password 
-
-↓
-
-abcdaiue
+コードをまとめる手段としてtraitを使用。

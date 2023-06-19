@@ -8,10 +8,20 @@
 </head>
 <body>
 
+@if ($errors->any())
+<div>
+  <ul>
+    @foreach ($errors->all() as $error)
+    <li>{{ $error }}</li>
+    @endforeach
+  </ul>
+</div>
+@endif
+
 <h3>Youtube</h3>
 <form action="{{ route('register-youtube') }}" method="POST">
     @csrf
-    <input type="text" name="channel_name" id="">
+    <input type="text" name="name" id="">
     <button>Submit</button>
 </form>
 <a style="font-size: 30px" href="{{ route('Youtube-list') }}">YoutubeBlockChannelList</a>
@@ -21,7 +31,7 @@
 <h2 style="margin-top: 100px">Word</h2>
 <form action="{{ route('register-word') }}" method="POST" >
     @csrf
-    <input type="text" name="word_name">
+    <input type="text" name="name">
     <button>Submit</button>
 </form>
 <a style="font-size: 30px" href="{{ route('Word-list') }}">WordChannelList</a>
