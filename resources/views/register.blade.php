@@ -9,7 +9,6 @@
 <body>
 
 @if ($errors->any())
-<!-- <div>{{$errors->first()}}</div> -->
 <div>
   <ul>
     @foreach ($errors->all() as $error)

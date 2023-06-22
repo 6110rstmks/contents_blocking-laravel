@@ -62,7 +62,6 @@ class BlockTarget {
     }
 
     public function download($model, $path) {
-        Log::debug($path);
         $fileName = $model . '.txt';
         $data = fopen($path, "w");
         $model = "App\Models\\" . $model;
