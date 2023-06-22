@@ -1,4 +1,3 @@
-削除したいワードがある場合　は　削除ボタンをクリック。
-However deleting isn't reflected immediatly, You must apply again one hour has elapsed.
 
-1時間経過後　もう一度申請する必要がある。
+If you have a word that you want to delete, click delete btn.
+However deleting isn't reflected immediatly, You must apply again one hour has elapsed.
