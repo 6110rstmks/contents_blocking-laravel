@@ -1,2 +1,4 @@
 削除したいワードがある場合　は　削除ボタンをクリック。
-ただし、即座には反映されず、1時間経過後　もう一度申請する必要がある。
+However deleting isn't reflected immediatly, You must apply again one hour has elapsed.
+
+1時間経過後　もう一度申請する必要がある。
