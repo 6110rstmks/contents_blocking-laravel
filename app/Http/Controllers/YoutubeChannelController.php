@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\YoutubeChannel;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\YoutubeChannelsImport;
 use Exception;
 use Storage;
@@ -14,10 +13,10 @@ use Log;
 class YoutubeChannelController extends Controller
 {
 
-    protected $blocktarget;
+    protected $blockTarget;
 
-    public function __construct(BlockTarget $blocktarget) {
-        $this->blockTarget = $blocktarget;
+    public function __construct(BlockTarget $blockTarget) {
+        $this->blockTarget = $blockTarget;
     }
 
     public function list() {
@@ -47,9 +46,9 @@ class YoutubeChannelController extends Controller
 
         $channel_name = getChannelName($videoID);
         if (YoutubeChannel::where('name', $channel_name)->count() > 0) {
-            return true;
+            return 1;
         } else {
-            return false;
+            return 0;
         }
 
     }
