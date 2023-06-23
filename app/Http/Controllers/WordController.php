@@ -18,6 +18,8 @@ class WordController extends Controller
 
     public function list() {
         $word_blackList = Word::all();
+        $cnt = $this->blockTarget->getCnt("YoutubeChannel");
+
         return view('word-list')
             ->with([
                 'word_blackList' => $word_blackList,

@@ -14,6 +14,12 @@ class BlockTarget {
         return $lists;
     }
 
+    public function getCnt($model) {
+        $model = "App\Models\\" . $model;
+        $cnt = $model::all()->count();
+        return $cnt;
+    }
+
     public function register($model) {
         $request->validate([
             'name' => 'unique:youtube_channels'

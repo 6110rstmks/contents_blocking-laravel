@@ -22,10 +22,12 @@ class YoutubeChannelController extends Controller
     public function list() {
         $lists = $this->blockTarget->getModel("YoutubeChannel");
 
+        $cnt = $this->blockTarget->getCnt("YoutubeChannel");
         $return_file = 'youtube-list';
         return view($return_file)
             ->with([
                 'lists' => $lists,
+                'cnt' => $cnt,
             ]);
     }
 
@@ -50,7 +52,6 @@ class YoutubeChannelController extends Controller
         } else {
             return 0;
         }
-
     }
 
     public function getChannelName($videoID) {

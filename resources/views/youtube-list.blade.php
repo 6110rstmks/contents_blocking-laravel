@@ -7,9 +7,11 @@
     <title>Document</title>
 </head>
 <body>
+    ***{{$cnt}}***
     @foreach($lists as $channel_name)
         <div>{{$channel_name->name}}</div>
     @endforeach
+
 
     <a href="{{route('youtube-download')}}" style="display: block; margin-top:300px; color: red;">CSV Export</a>
 
