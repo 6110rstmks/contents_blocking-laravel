@@ -36,6 +36,8 @@ class YoutubeChannelController extends Controller
             'name' => 'required|unique:youtube_channels'
         ]);
 
+
+
         YoutubeChannel::create([
            'name' => $request->name
         ]);

@@ -10,10 +10,10 @@ use Log;
 
 class WordController extends Controller
 {
-    protected $blocktarget;
+    protected $blockTarget;
 
-    public function __construct(BlockTarget $blocktarget) {
-        $this->blockTarget = $blocktarget;
+    public function __construct(BlockTarget $blockTarget) {
+        $this->blockTarget = $blockTarget;
     }
 
     public function list() {
@@ -31,8 +31,14 @@ class WordController extends Controller
             'name' => 'required|unique:words'
         ]);
 
+        $blockWord = ltrim($request->name);
+
+        if (strpos($blockWord, '　') !== false || strpos($blockWord, ' ') !== false) {
+            return \Redirect::back()->withErrors(['Don\'t put spaces between words']);
+        }
+
         Word::create([
-           'name' => $request->name
+           'name' => $blockWord,
         ]);
 
         return redirect()->route('register-page');
