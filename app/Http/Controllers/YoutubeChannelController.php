@@ -48,7 +48,7 @@ class YoutubeChannelController extends Controller
     public function block(Request $request) {
         $videoID = $request->input('videoid');
 
-        $channel_name = getChannelName($videoID);
+        $channel_name = $this->getChannelName($videoID);
         if (YoutubeChannel::where('name', $channel_name)->count() > 0) {
             return 1;
         } else {

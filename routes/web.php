@@ -31,9 +31,9 @@ Route::group([
 });
 
 
-// Route::group([
-//     'middleware' => 'auth:web'
-// ], function() {
+Route::group([
+    'middleware' => 'auth:web'
+], function() {
 
     Route::get('/youtube_list', [YoutubeChannelController::class, 'list'])
         ->name('Youtube-list');
@@ -64,4 +64,4 @@ Route::group([
     Route::post('/word-csv-import', [WordController::class, 'import'])
         ->name('word-csv-import');
 
-// });
+});
