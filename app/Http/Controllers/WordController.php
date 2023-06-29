@@ -52,7 +52,6 @@ class WordController extends Controller
 
         // stripos() is case-insensitive version of strpos()
         foreach ($words_in_db as $data) {
-            // Log::debug($data);
             if (stripos($title, $data) != false || stripos($title, $data) === 0) {
                 return 1;
             }

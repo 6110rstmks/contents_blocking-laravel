@@ -36,6 +36,14 @@
 </form>
 <a style="font-size: 30px" href="{{ route('Word-list') }}">WordChannelList</a>
 
+<h2 style="margin-top: 100px">Site</h2>
+<form action="{{ route('register-site') }}" method="POST" >
+    @csrf
+    <input type="text" name="name">
+    <button>Submit</button>
+</form>
+<a style="font-size: 30px" href="{{ route('Site-list') }}">SiteList</a>
+
 
 @if (App\Models\YoutubeApi::all()->count() == 0)
 <div style="margin-top:100px">

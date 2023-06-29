@@ -36,10 +36,14 @@ class YoutubeChannelController extends Controller
             'name' => 'required|unique:youtube_channels'
         ]);
 
+        $channelName = ltrim($request->name);
 
+        if (strpos($channelName, '　') !== false || strpos($channelName, ' ') !== false) {
+            return \Redirect::back()->withErrors(['Don\'t put spaces between words']);
+        }
 
         YoutubeChannel::create([
-           'name' => $request->name
+           'name' => $channelName
         ]);
 
         return redirect()->route('register-page');
