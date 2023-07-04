@@ -17,12 +17,13 @@ class WordController extends Controller
     }
 
     public function list() {
-        $word_blackList = Word::all();
-        $cnt = $this->blockTarget->getCnt("YoutubeChannel");
+        $lists = Word::all();
+        $cnt = $this->blockTarget->getCnt("Word");
 
         return view('word-list')
             ->with([
-                'word_blackList' => $word_blackList,
+                'lists' => $lists,
+                'cnt' => $cnt
             ]);
     }
 

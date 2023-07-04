@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Common\BlockTarget;
+use App\Models\Site;
 
 class SiteController extends Controller
 {
@@ -13,16 +15,17 @@ class SiteController extends Controller
     }
 
     public function list() {
-        $site_blackList = Site::all();
-        $cnt = $this->blockTarget->getCnt("YoutubeChannel");
+        $lists = Site::all();
+        $cnt = $this->blockTarget->getCnt("Site");
 
-        return view('word-list')
+        return view('site-list')
             ->with([
-                'word_blackList' => $word_blackList,
+                'lists' => $lists,
+                'cnt' => $cnt
             ]);
     }
 
-    public function register() {
+    public function register(Request $request) {
         $request->validate([
             'name' => 'required|unique:sites'
         ]);
@@ -32,7 +35,7 @@ class SiteController extends Controller
         if (strpos($blockSite, '　') !== false || strpos($blockSite, ' ') !== false) {
             return \Redirect::back()->withErrors(['Don\'t put spaces between words']);
         }
-        Word::create([
+        Site::create([
            'name' => $blockSite,
         ]);
 

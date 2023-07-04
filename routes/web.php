@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\YoutubeChannelController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WordController;
+use App\Http\Controllers\SiteController;
 use App\Http\Controllers\YoutubeApiController;
 
 /*
@@ -41,16 +42,19 @@ Route::group([
     Route::get('/word_list', [WordController::class, 'list'])
         ->name('Word-list');
 
+    Route::get('/site_list', [SiteController::class, 'list'])
+        ->name('Site-list');
+
     Route::get('/register_page', function() {
         return view('register');
     })->name('register-page');
 
     Route::post('/register_youtube', [YoutubeChannelController::class, 'register'])
     ->name('register-youtube');
-
     Route::post('/register_word', [WordController::class, 'register'])
     ->name('register-word');
-
+    Route::post('/register_site', [SiteController::class, 'register'])
+    ->name('register-site');
     Route::post('/register_api', [YoutubeApiController::class, 'register'])
     ->name('register-api');
 
@@ -58,10 +62,14 @@ Route::group([
         ->name('youtube-download');
     Route::get('/word_download', [WordController::class, 'download'])
         ->name('word-download');
+    Route::get('/site_download', [SiteController::class, 'download'])
+        ->name('site-download');
 
     Route::post('/youtube-csv-import', [YoutubeChannelController::class, 'import'])
         ->name('youtube-csv-import');
     Route::post('/word-csv-import', [WordController::class, 'import'])
         ->name('word-csv-import');
+    Route::post('/site-csv-import', [SiteController::class, 'import'])
+        ->name('site-csv-import');
 
 });

@@ -7,20 +7,17 @@
     <title>Document</title>
 </head>
 <body>
-    @foreach($lists as $word_name)
-        <div>{{$word_name->name}}</div>
+    ***{{$cnt}}***
+    <!-- @foreach($lists as $name)
+        <div>{{$name->name}}</div>
     @endforeach
 
-    <a href="{{route('Youtube-list')}}">To YoutubeList</a>
+    <a href="{{route('youtube-download')}}" style="display: block; margin-top:300px; color: red;">CSV Export</a>
 
-    <a href="{{route('word-download')}}" style="display: block; margin-top:300px; color: red;">CSV Export</a>
-
-    <form action="{{route('word-csv-import')}}" style="margin-top: 100px" method="POST" enctype="multipart/form-data">
+    <form action="{{route('youtube-csv-import')}}" style="margin-top: 100px" method="POST" enctype="multipart/form-data">
         @csrf
         <p class="mt-5"><input type="file" name="txtFile"></p>
         <button>CSV import</button>
-    </form>
-
-
+    </form> -->
 </body>
 </html>

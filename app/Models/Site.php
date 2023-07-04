@@ -12,4 +12,7 @@ class Site extends Model
     protected $fillable = [
         'name'
     ];
+
+    public $timestamps = false;
+
 }
