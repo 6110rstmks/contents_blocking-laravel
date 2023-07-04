@@ -11,17 +11,17 @@ class App extends Component
 
     public $cnt;
     public $lists;
-    public $export_route;
-    public $import_route;
+    public $export;
+    public $import;
     /**
      * Create a new component instance.
      */
-    public function __construct($cnt, $lists, $export_route, $import_route)
+    public function __construct($cnt, $lists, $export, $import)
     {
         $this->cnt = $cnt;
-        // $this->lists = $lists;
-        // $this->export_route = $export_route;
-        // $this->import_route = $import_route;
+        $this->lists = $lists;
+        $this->export = $export;
+        $this->import = $import;
     }
 
     /**

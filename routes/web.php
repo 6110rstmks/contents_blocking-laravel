@@ -72,4 +72,4 @@ Route::group([
     Route::post('/site-csv-import', [SiteController::class, 'import'])
         ->name('site-csv-import');
 
-});
+})
