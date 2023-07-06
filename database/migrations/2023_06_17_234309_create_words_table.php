@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('words', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->timestamps();
+            $table->boolean('disableFlg')->default(0);
         });
     }
 

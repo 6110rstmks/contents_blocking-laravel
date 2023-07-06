@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Common\BlockTarget;
 use App\Models\Site;
 
+use Log;
+
 class SiteController extends Controller
 {
     protected $blockTarget;
@@ -21,7 +23,9 @@ class SiteController extends Controller
         return view('site-list')
             ->with([
                 'lists' => $lists,
-                'cnt' => $cnt
+                'cnt' => $cnt,
+                'filename' => "site"
+
             ]);
     }
 
@@ -45,6 +49,7 @@ class SiteController extends Controller
     public function block() {
         $url = $request->input('title');
         $url = preg_replace( "#^[^:/.]*[:/]+#i", "", $url );
+        Log::debug($url);
         if (Site::where('name', $url)->count() > 0) {
             return 1;
         } else {

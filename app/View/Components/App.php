@@ -13,15 +13,18 @@ class App extends Component
     public $lists;
     public $export;
     public $import;
+    // public $unblock;
+    public $filename;
     /**
      * Create a new component instance.
      */
-    public function __construct($cnt, $lists, $export, $import)
+    public function __construct($cnt, $lists, $export, $import, $filename)
     {
         $this->cnt = $cnt;
         $this->lists = $lists;
         $this->export = $export;
         $this->import = $import;
+        $this->filename = $filename;
     }
 
     /**

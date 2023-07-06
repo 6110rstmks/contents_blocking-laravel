@@ -72,4 +72,11 @@ Route::group([
     Route::post('/site-csv-import', [SiteController::class, 'import'])
         ->name('site-csv-import');
 
+    Route::post('/word_unblock/{word}', [WordController::class, 'temporaryUnblock'])
+        ->name('word-unblock');
+
+    Route::get('/dev-block-test-page', [WordController::class, 'testBlock']);
+
+    Route::post('/return_word', [WordController::class, 'block'])
+        ->name('ricepizza');
 });

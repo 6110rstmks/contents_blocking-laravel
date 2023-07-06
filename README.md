@@ -1,12 +1,24 @@
+Blockwordの中の　ワード最大、3つまでを　25m　　見れる　ようにする（その日に限る）
+一日2回まで　その操作が可能。
 
-If you have a word that you want to delete, click delete btn.
-However deleting isn't reflected immediately, You must apply again one hour has elapsed.
+ようなプログラムを作成する
 
-＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-## TODO：
+wordテーブルのcolumn にdisableFlg(bool)を追加　
+if it is 1, disabling word block.
 
-youtube-list.blade.php
+毎日00:00にテーブル内のすべてのデータのflgを0に戻す。
 
-とword.blade.phpで共通の
 
-コンポーネントを使用する
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+I don't know how to create program limiting to 3 words a day.
+
+#### PLAN A
+
+disable buttonをclickした際に、havingを使って、flgが1のレコードが4つ以上ないか
+あれば処理中断。
+
+#### PLAN B
+
+
+
+

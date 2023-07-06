@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('email');
             $table->string('password');
-            $table->string('youtubue_api');
+            $table->string('youtube_api')->nullable();
+            $table->boolean('dayLimit')->default(0)->comment('unblockをすでに行ったかどうか');
         });
     }
 

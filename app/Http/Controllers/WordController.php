@@ -7,23 +7,35 @@ use App\Models\Word;
 use App\Common\BlockTarget;
 
 use Log;
+use Auth;
+use Illuminate\Support\Facades\Input;
+use Carbon\Carbon;
+
 
 class WordController extends Controller
 {
     protected $blockTarget;
 
+    public $endTime;
+
     public function __construct(BlockTarget $blockTarget) {
         $this->blockTarget = $blockTarget;
     }
 
+    public function testBlock() {
+        return view('test-page');
+    }
+
     public function list() {
+
         $lists = Word::all();
         $cnt = $this->blockTarget->getCnt("Word");
 
         return view('word-list')
             ->with([
                 'lists' => $lists,
-                'cnt' => $cnt
+                'cnt' => $cnt,
+                'filename' => "word"
             ]);
     }
 
@@ -46,7 +58,15 @@ class WordController extends Controller
     }
 
     public function block(Request $request) {
-        $words_in_db = Word::all()->pluck("name");
+        $nowTime = Carbon::now();
+
+
+        if ($nowTime->gte(session('endTime'))) {
+            Log::debug('oiuo');
+            Word::where('disableFlg', 1)->update(['disableFlg' => 0]);
+            session()->forget('endTime');
+        }
+        $words_in_db = Word::all()->pluck("name")->where('disableFlg', 0);
         $title = $request->input('title');
         $title = preg_replace('/　/u', '', $title);  // delete multibyte space
         $title = str_replace(' ', '', $title); // delete singlebyte space
@@ -58,6 +78,19 @@ class WordController extends Controller
             }
         }
         return 0;
+    }
+
+    public function temporaryUnblock(Word $word) {
+        if (Auth::user()->dayLimit === 0){
+            $word->disableFlg = 1;
+            Auth::user()->dayLimit = 1;
+            $word->save();
+            Auth::user()->save();
+            session(['endTime' => Carbon::now()->addMinutes(1)]);
+            return redirect()->back();
+        } else {
+            return \Redirect::back()->withErrors(['一日のunblock回数はすでに満たしています。']);
+        }
     }
 
     public function import(Request $request) {

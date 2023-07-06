@@ -28,6 +28,7 @@ class YoutubeChannelController extends Controller
             ->with([
                 'lists' => $lists,
                 'cnt' => $cnt,
+                'filename' => "youtube"
             ]);
     }
 
