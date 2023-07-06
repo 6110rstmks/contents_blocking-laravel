@@ -86,7 +86,7 @@ class YoutubeChannelController extends Controller
     }
 
     public function download() {
-        $path = public_path('dummy.txt');
+        $path = public_path('/storage/dummy.txt');
         $fileName = $this->blockTarget->download("YoutubeChannel", $path);
         return response()->download($path, $fileName, ['Content-Type: text/plain']);
     }
