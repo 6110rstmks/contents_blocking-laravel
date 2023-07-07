@@ -86,7 +86,7 @@ class WordController extends Controller
             Auth::user()->dayLimit = 1;
             $word->save();
             Auth::user()->save();
-            session(['endTime' => Carbon::now()->addMinutes(1)]);
+            session(['endTime' => Carbon::now()->addMinutes(30)]);
             return redirect()->back();
         } else {
             return \Redirect::back()->withErrors(['一日のunblock回数はすでに満たしています。']);
