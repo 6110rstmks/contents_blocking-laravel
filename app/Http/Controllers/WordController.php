@@ -59,14 +59,14 @@ class WordController extends Controller
 
     public function block(Request $request) {
         $nowTime = Carbon::now();
-
+        Log::debug(session('endTime'));
 
         if ($nowTime->gte(session('endTime'))) {
-            Log::debug('oiuo');
             Word::where('disableFlg', 1)->update(['disableFlg' => 0]);
             session()->forget('endTime');
         }
-        $words_in_db = Word::all()->pluck("name")->where('disableFlg', 0);
+        $words_in_db = Word::all()->where('disableFlg', 0)->pluck("name");
+        // Log::debug($words_in_db);
         $title = $request->input('title');
         $title = preg_replace('/　/u', '', $title);  // delete multibyte space
         $title = str_replace(' ', '', $title); // delete singlebyte space

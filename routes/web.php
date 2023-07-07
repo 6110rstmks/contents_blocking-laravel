@@ -32,9 +32,9 @@ Route::group([
 });
 
 
-Route::group([
-    'middleware' => 'auth:web'
-], function() {
+// Route::group([
+//     'middleware' => 'auth:web'
+// ], function() {
 
     Route::get('/youtube_list', [YoutubeChannelController::class, 'list'])
         ->name('Youtube-list');
@@ -79,4 +79,4 @@ Route::group([
 
     Route::post('/return_word', [WordController::class, 'block'])
         ->name('ricepizza');
-});
+// });

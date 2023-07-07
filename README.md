@@ -2,12 +2,10 @@ Blockwordの中の　ワード最大、3つまでを　25m　　見れる　よ�
 一日2回まで　その操作が可能。
 
 ようなプログラムを作成する
-
-wordテーブルのcolumn にdisableFlg(bool)を追加　
 if it is 1, disabling word block.
+"The disableFlg column in all records of the 'Word' table will be reset to 0 every day at 00:00.(crontab)
 
-毎日00:00にテーブル内のすべてのデータのflgを0に戻す。
-
+残り時間を表示。
 
 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 I don't know how to create program limiting to 3 words a day.
