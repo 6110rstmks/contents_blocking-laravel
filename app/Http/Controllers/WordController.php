@@ -64,6 +64,10 @@ class WordController extends Controller
         if ($nowTime->gte(session('endTime'))) {
             Word::where('disableFlg', 1)->update(['disableFlg' => 0]);
             session()->forget('endTime');
+            if (Auth::user()->dayLimit === 0) {
+                Auth::user()->dayLimit = 1;
+                Auth::user()->save();
+            }
         }
         $words_in_db = Word::all()->where('disableFlg', 0)->pluck("name");
         // Log::debug($words_in_db);
@@ -74,23 +78,33 @@ class WordController extends Controller
         // stripos() is case-insensitive version of strpos()
         foreach ($words_in_db as $data) {
             if (stripos($title, $data) != false || stripos($title, $data) === 0) {
-                return 1;
+                return $data;
             }
         }
         return 0;
     }
 
     public function temporaryUnblock(Word $word) {
-        if (Auth::user()->dayLimit === 0){
-            $word->disableFlg = 1;
-            Auth::user()->dayLimit = 1;
+        $CntOfDisabledBlockedWord = Word::where('disableFlg', 1)->count();
+
+        if (Auth::user()->dayLimit === 1) {
+            return \Redirect::back()->withErrors(['本日の制限解除は一度行ったためできません。']);
+        }
+
+        if ($CntOfDisabledBlockedWord >= 3) {
+            return \Redirect::back()->withErrors(['一日のunblock回数はすでに満たしています。']);
+        } elseif ($CntOfDisabledBlockedWord <= 2 && $CntOfDisabledBlockedWord >= 0) {
+            $word->disableFlg += 1;
             $word->save();
-            Auth::user()->save();
-            session(['endTime' => Carbon::now()->addMinutes(30)]);
+            if ($CntOfDisabledBlockedWord === 0) {
+                session(['endTime' => Carbon::now()->addMinutes(30)]);
+            }
             return redirect()->back();
         } else {
-            return \Redirect::back()->withErrors(['一日のunblock回数はすでに満たしています。']);
+            return \Redirect::back()->withErrors(['なんか変なことおきてる']);
+
         }
+
     }
 
     public function import(Request $request) {
