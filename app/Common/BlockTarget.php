@@ -41,13 +41,14 @@ class BlockTarget {
         if ($request->hasFile('txtFile')) {
             //拡張子がCSVであるかの確認
             if ($request->txtFile->getClientOriginalExtension() !== "txt") {
-                throw new Exception('不適切な拡張子です。');
+            return \Redirect::back()->withErrors(['不適切な拡張子です。']);
+
             }
             //ファイルの保存
             $newTxtFileName = $request->file('txtFile')->getClientOriginalName();
             $request->file('txtFile')->storeAs('public/txt', $newTxtFileName);
         } else {
-            throw new Exception('txtファイルの取得に失敗しました。');
+            return \Redirect::back()->withErrors(['txtファイルの取得に失敗しました。']);
         }
 
         $txtFile = Storage::disk('local')->get("public/txt/{$newTxtFileName}");

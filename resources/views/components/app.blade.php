@@ -19,7 +19,7 @@
     <div style="display:flex">
 
         <div style="flex: 50%;">
-            ***{{$cnt}}***
+            <div style="font-size: 45px">***{{$cnt}}***</div>
             @foreach($lists as $name)
             <div style="display:flex; font-size: 25px">
                 <div>{{$name->name}}</div>
@@ -27,10 +27,10 @@
                     @if ($name->disableFlg === 0)
                         <form action="{{route('word-unblock', $name)}}" style="margin-left: 15px" method="POST">
                         @csrf
-                            <button>unblock</button>
+                            <button style="font-size: 25px">unblock</button>
                         </form>
                     @elseif ($name->disableFlg == 1)
-                        <span style="font-size: 18px; border: 1px black solid">Now enable</span>
+                        <span style="font-size: 25px; border: 1px black solid; margin-left: 15px">Now enable</span>
                     @endif
                 @endif
             </div>

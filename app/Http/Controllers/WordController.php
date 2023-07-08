@@ -23,6 +23,8 @@ class WordController extends Controller
     }
 
     public function testBlock() {
+
+
         return view('test-page');
     }
 
@@ -30,12 +32,27 @@ class WordController extends Controller
 
         $lists = Word::all();
         $cnt = $this->blockTarget->getCnt("Word");
+        $nowTime = Carbon::now();
+        $endTime = session('endTime');
+        if ($nowTime->gte($endTime)) {
+            Word::where('disableFlg', 1)->update(['disableFlg' => 0]);
+            session()->forget('endTime');
+            if (Auth::user()->dayLimit === 0) {
+                Auth::user()->dayLimit = 1;
+                Auth::user()->save();
+            }
+        }
+
+        $diffTime = $nowTime->diffInMinutes($endTime);
 
         return view('word-list')
             ->with([
                 'lists' => $lists,
                 'cnt' => $cnt,
-                'filename' => "word"
+                'filename' => "word",
+                // 'nowTime' => $nowTime,
+                // 'endTime' => $endTime,
+                'diffTime'=> $diffTime
             ]);
     }
 
