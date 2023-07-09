@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\Word;
 use Auth;
+use Log;
 
 class LimitRelease extends Command
 {
@@ -28,6 +29,9 @@ class LimitRelease extends Command
      */
     public function handle()
     {
-        Auth::user()->update('dayLimit', 0);
+        Log::debug('こんにちは');
+        Auth::user()->dayLimit = 0;
+        Auth::user()->save();
+
     }
 }

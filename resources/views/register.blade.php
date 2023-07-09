@@ -31,8 +31,20 @@
 <h2 style="margin-top: 100px">Word</h2>
 <form action="{{ route('register-word') }}" method="POST" >
     @csrf
+
     <input type="text" name="name">
-    <button>Submit</button>
+    <div>
+        <label for="">解除可</label>
+        <input type="radio" name="genre" value="1">
+    </div>
+    <div>
+        <label for="">解除不可</label>
+        <input type="radio" name="genre" value="2">
+    </div>
+    <di>
+
+        <button>Submit</button>
+    </di    v>
 </form>
 <a style="font-size: 30px" href="{{ route('Word-list') }}">WordChannelList</a>
 

@@ -80,6 +80,7 @@ class WordController extends Controller
 
         if ($nowTime->gte(session('endTime'))) {
             Word::where('disableFlg', 1)->update(['disableFlg' => 0]);
+            Word::save();
             session()->forget('endTime');
             if (Auth::user()->dayLimit === 0) {
                 Auth::user()->dayLimit = 1;
