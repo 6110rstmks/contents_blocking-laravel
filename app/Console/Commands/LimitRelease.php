@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use App\Models\Word;
 use Auth;
 use Log;
+use App\Models\User;
 
 class LimitRelease extends Command
 {
@@ -30,8 +31,8 @@ class LimitRelease extends Command
     public function handle()
     {
         Log::debug('こんにちは');
-        Auth::user()->dayLimit = 0;
-        Auth::user()->save();
-
+        $user = User::where('id', 1)->first();
+        $user->dayLimit = 0;
+        $user->save();
     }
 }
