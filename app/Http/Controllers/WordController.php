@@ -49,7 +49,9 @@ class WordController extends Controller
 
         return view('word-list')
             ->with([
-                'lists' => $lists,
+                'lists1' => $lists1,
+                'lists2' => $lists2,
+                'lists3' => $lists3,
                 'cnt' => $cnt,
                 'filename' => "word",
                 'diffTime'=> $diffTime

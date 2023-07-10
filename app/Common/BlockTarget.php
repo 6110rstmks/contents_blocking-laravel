@@ -60,8 +60,6 @@ class BlockTarget {
 
         if ($model === "Word") {
             foreach ($uploadedData as $row) {
-
-
                 $NameGenreArray = explode(', ', $row);
                 Log::debug($NameGenreArray);
 
