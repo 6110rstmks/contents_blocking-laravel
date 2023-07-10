@@ -36,7 +36,7 @@ class BlockTarget {
     }
 
     public function import($model, $request) {
-        $model = "App\Models\\" . $model;
+        $modelPath = "App\Models\\" . $model;
 
         if ($request->hasFile('txtFile')) {
             //拡張子がCSVであるかの確認
@@ -52,30 +52,64 @@ class BlockTarget {
         }
 
         $txtFile = Storage::disk('local')->get("public/txt/{$newTxtFileName}");
+
         // $csvを元に行単位のコレクション作成。explodeで改行ごとに分解
         $uploadedData = collect(explode("\n", $txtFile));
 
-        foreach ($uploadedData as $row) {
+        Log::debug($model);
 
-            if ($model::where('name', $row)->count() > 0 || empty($row)) {
-                continue;
+        if ($model === "Word") {
+            foreach ($uploadedData as $row) {
+
+
+                $NameGenreArray = explode(', ', $row);
+                Log::debug($NameGenreArray);
+
+                if ($modelPath::where('name', $row)->count() > 0 || empty($row)) {
+                    continue;
+                }
+                $ModelInstance = new $modelPath();
+                $ModelInstance->name = $NameGenreArray[0];
+                $ModelInstance->genre = $NameGenreArray[1];
+                $ModelInstance->save();
+                }
+            // after inserting the dataset
+        } else {
+            foreach ($uploadedData as $row) {
+
+                if ($model::where('name', $row)->count() > 0 || empty($row)) {
+                    continue;
+                }
+                $youtubeChannels = new $modelPath();
+                $youtubeChannels->name = $row;
+                $youtubeChannels->save();
             }
-            $youtubeChannels = new $model();
-            $youtubeChannels->name = $row;
-            $youtubeChannels->save();
         }
+
         // after inserting the dataset
         Storage::delete('public/txt' . $newTxtFileName);
     }
 
     public function download($model, $path) {
         $fileName = $model . '.txt';
-        $data = fopen($path, "w");
-        $model = "App\Models\\" . $model;
-        $name_lists = $model::all()->pluck('name');
-        foreach($name_lists as $name) {
-            fwrite($data, $name);
-            fwrite($data, "\n");
+        $modelPath = "App\Models\\" . $model;
+
+        if ($model === "Word") {
+            $name_lists = $modelPath::all()->pluck('genre', 'name');
+            $data = fopen($path, "w");
+            foreach($name_lists as $name => $genre) {
+                fwrite($data, $name);
+                fwrite($data, ", ");
+                fwrite($data, $genre);
+                fwrite($data, "\n");
+            }
+        } else {
+            $name_lists = $modelPath::all()->pluck('name');
+            $data = fopen($path, "w");
+            foreach($name_lists as $name) {
+                fwrite($data, $name);
+                fwrite($data, "\n");
+            }
         }
         fclose($data);
         return $fileName;

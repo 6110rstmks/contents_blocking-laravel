@@ -30,7 +30,9 @@ class WordController extends Controller
 
     public function list() {
 
-        $lists = Word::all();
+        $lists1 = Word::all()->where('genre', 1);
+        $lists2 = Word::all()->where('genre', 2);
+        $lists3 = Word::all()->where('genre', 3);
         $cnt = $this->blockTarget->getCnt("Word");
         $nowTime = Carbon::now();
         $endTime = session('endTime');
@@ -50,15 +52,14 @@ class WordController extends Controller
                 'lists' => $lists,
                 'cnt' => $cnt,
                 'filename' => "word",
-                // 'nowTime' => $nowTime,
-                // 'endTime' => $endTime,
                 'diffTime'=> $diffTime
             ]);
     }
 
     public function register(Request $request) {
         $request->validate([
-            'name' => 'required|unique:words'
+            'name' => 'required|unique:words',
+            'genre'=> 'required'
         ]);
 
         $blockWord = ltrim($request->name);
@@ -67,8 +68,11 @@ class WordController extends Controller
             return \Redirect::back()->withErrors(['Don\'t put spaces between words']);
         }
 
+        $number = $request->genre;
+
         Word::create([
            'name' => $blockWord,
+           'genre'=> $number,
         ]);
 
         return redirect()->route('register-page');

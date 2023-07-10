@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Word extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'disableFlg'];
+    protected $fillable = ['name', 'disableFlg', 'genre'];
 
     public $timestamps = false;
 
