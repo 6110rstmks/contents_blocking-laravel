@@ -75,7 +75,7 @@ class BlockTarget {
         } else {
             foreach ($uploadedData as $row) {
 
-                if ($model::where('name', $row)->count() > 0 || empty($row)) {
+                if ($modelPath::where('name', $row)->count() > 0 || empty($row)) {
                     continue;
                 }
                 $youtubeChannels = new $modelPath();
