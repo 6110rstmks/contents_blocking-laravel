@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\YoutubeChannel;
+use App\Models\YoutubeApi;
 use App\Imports\YoutubeChannelsImport;
 use Exception;
 use Storage;
 use App\Common\BlockTarget;
 use Log;
+
 
 class YoutubeChannelController extends Controller
 {
@@ -62,7 +64,8 @@ class YoutubeChannelController extends Controller
     }
 
     public function getChannelName($videoID) {
-        $API_KEY = "AIzaSyBNTsy_ilAP1XecHoqTu3CK_23-25G05eU";
+        $API_KEY =  YoutubeApi::first()->key;
+        Log::debug($API_KEY);
         $url = "https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" . $videoID . "&key=" . $API_KEY;
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
