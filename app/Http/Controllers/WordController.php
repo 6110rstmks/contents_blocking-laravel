@@ -53,7 +53,6 @@ class WordController extends Controller
                 'lists2' => $lists2,
                 'lists3' => $lists3,
                 'cnt' => $cnt,
-                'filename' => "word",
                 'diffTime'=> $diffTime
             ]);
     }
@@ -116,7 +115,7 @@ class WordController extends Controller
         }
 
         if ($CntOfDisabledBlockedWord >= 3) {
-            return \Redirect::back()->withErrors(['一日のunblock回数はすでに満たしています。']);
+            return \Redirect::back()->withErrors(['the number of blocking per day meets the limit.']);
         } elseif ($CntOfDisabledBlockedWord <= 2 && $CntOfDisabledBlockedWord >= 0) {
             $word->disableFlg += 1;
             $word->save();
@@ -125,7 +124,7 @@ class WordController extends Controller
             }
             return redirect()->back();
         } else {
-            return \Redirect::back()->withErrors(['なんか変なことおきてる']);
+            return \Redirect::back()->withErrors(['Something is wrong with the system']);
 
         }
 
