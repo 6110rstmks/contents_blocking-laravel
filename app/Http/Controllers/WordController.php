@@ -120,7 +120,7 @@ class WordController extends Controller
             $word->disableFlg += 1;
             $word->save();
             if ($CntOfDisabledBlockedWord === 0) {
-                session(['endTime' => Carbon::now()->addMinutes(1)]);
+                session(['endTime' => Carbon::now()->addMinutes(2)]);
             }
             return redirect()->back();
         } else {
