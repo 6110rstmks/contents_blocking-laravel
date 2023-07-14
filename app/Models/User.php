@@ -20,7 +20,8 @@ class User extends Authenticatable
     protected $fillable = [
         'email',
         'password',
-        'dayLimit'
+        'dayLimit',
+        'timeLimit'
     ];
     public $timestamps = false;
 

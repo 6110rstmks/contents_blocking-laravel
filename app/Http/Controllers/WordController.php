@@ -23,27 +23,18 @@ class WordController extends Controller
     }
 
     public function testBlock() {
-
-
         return view('test-page');
     }
 
     public function list() {
-
         $lists1 = Word::all()->where('genre', 1);
         $lists2 = Word::all()->where('genre', 2);
         $lists3 = Word::all()->where('genre', 3);
         $cnt = $this->blockTarget->getCnt("Word");
         $nowTime = Carbon::now();
-        $endTime = session('endTime');
-        if ($nowTime->gte($endTime)) {
-            Word::where('disableFlg', 1)->update(['disableFlg' => 0]);
-            session()->forget('endTime');
-            if (Auth::user()->dayLimit === 0) {
-                Auth::user()->dayLimit = 1;
-                Auth::user()->save();
-            }
-        }
+        $endTime = Auth::user()->timeLimit;
+
+        $this->timeComparison($nowTime, $endTime);
 
         $diffTime = $nowTime->diffInMinutes($endTime);
 
@@ -81,17 +72,9 @@ class WordController extends Controller
 
     public function block(Request $request) {
         $nowTime = Carbon::now();
-        Log::debug(session('endTime'));
+        $endTime = Auth::user()->timeLimit;
+        $this->timeComparison($nowTime, $endTime);
 
-        if ($nowTime->gte(session('endTime'))) {
-            Word::where('disableFlg', 1)->update(['disableFlg' => 0]);
-            Word::save();
-            session()->forget('endTime');
-            if (Auth::user()->dayLimit === 0) {
-                Auth::user()->dayLimit = 1;
-                Auth::user()->save();
-            }
-        }
         $words_in_db = Word::all()->where('disableFlg', 0)->pluck("name");
         // Log::debug($words_in_db);
         $title = $request->input('title');
@@ -107,12 +90,25 @@ class WordController extends Controller
         return 0;
     }
 
+    public function timeComparison($nowTime, $endTime) {
+        if (!is_null($endTime) && $nowTime->gte($endTime)) {
+            Word::where('disableFlg', 1)->update(['disableFlg' => 0]);
+            Auth::user()->timeLimit = null;
+            Auth::user()->save();
+            if (Auth::user()->dayLimit === 0) {
+                Auth::user()->dayLimit = 1;
+                Auth::user()->save();
+            }
+        }
+    }
+
     public function temporaryUnblock(Word $word) {
-        $CntOfDisabledBlockedWord = Word::where('disableFlg', 1)->count();
 
         if (Auth::user()->dayLimit === 1) {
-            return \Redirect::back()->withErrors(['本日の制限解除は一度行ったためできません。']);
+            return \Redirect::back()->withErrors(['You have reached the limit of unblock attempts for today.']);
         }
+
+        $CntOfDisabledBlockedWord = Word::where('disableFlg', 1)->count();
 
         if ($CntOfDisabledBlockedWord >= 3) {
             return \Redirect::back()->withErrors(['the number of blocking per day meets the limit.']);
@@ -120,14 +116,13 @@ class WordController extends Controller
             $word->disableFlg += 1;
             $word->save();
             if ($CntOfDisabledBlockedWord === 0) {
-                session(['endTime' => Carbon::now()->addMinutes(2)]);
+                Auth::user()->timeLimit = Carbon::now()->addMinutes(2);
+                Auth::user()->save();
             }
             return redirect()->back();
         } else {
             return \Redirect::back()->withErrors(['Something is wrong with the system']);
-
         }
-
     }
 
     public function import(Request $request) {
