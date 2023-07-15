@@ -39,6 +39,7 @@ class WordController extends Controller
         $interval = $nowTime->diffAsCarbonInterval($endTime, false);
 
         Log::debug($interval);
+        Log::debug($interval->invert);
 
         if ($interval->invert) {
             $diffTime = $nowTime->diffInMinutes($endTime);
