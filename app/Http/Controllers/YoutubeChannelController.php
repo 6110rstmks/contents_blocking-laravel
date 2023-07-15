@@ -70,7 +70,7 @@ class YoutubeChannelController extends Controller
         }
 
         if (YoutubeChannel::where('name', $channelName)->count() > 0) {
-            return 1;
+            return $channelName;
         }
         return 0;
     }
