@@ -65,18 +65,15 @@ class YoutubeChannelController extends Controller
         // stripos() is case-insensitive version of strpos()
         foreach ($words_in_db as $data) {
             if (stripos($title, $data) != false || stripos($title, $data) === 0) {
-                Log::debug($data);
                 return $data;
             }
         }
-        
+
         if (YoutubeChannel::where('name', $channelName)->count() > 0) {
             return 1;
         }
         return 0;
     }
-
-
 
     public function getApiData($videoID) {
         $API_KEY =  YoutubeApi::first()->key;

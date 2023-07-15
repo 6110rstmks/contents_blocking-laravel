@@ -20,9 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::post('/return_channel', [YoutubeChannelController::class, 'blockChannel']);
-Route::post('/return_title', [YoutubeChannelController::class, 'blockWordInTitle']);
-Route::post('/return_word', [WordController::class, 'block'])
-    ->name('testest');
-
+Route::post('/return_youtube', [YoutubeChannelController::class, 'block']);
+Route::post('/return_word', [WordController::class, 'block']);
 
