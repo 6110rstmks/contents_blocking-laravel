@@ -36,7 +36,16 @@ class WordController extends Controller
 
         $this->timeComparison($nowTime, $endTime);
 
-        $diffTime = $nowTime->diffInMinutes($endTime);
+        $interval = $nowTime->diffAsCarbonInterval($endTime, false);
+
+        Log::debug($interval);
+
+        if ($interval) {
+            $diffTime = $nowTime->diffInMinutes($endTime);
+        } else {
+            $diffTime = null;
+        }
+
 
         return view('word-list')
             ->with([
