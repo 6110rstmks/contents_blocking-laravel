@@ -115,7 +115,7 @@ class WordController extends Controller
             $word->save();
             if ($CntOfDisabledBlockedWord === 0) {
                 $user = User::find(1);
-                $user->imeLimit = Carbon::now()->addMinutes(30);
+                $user->timeLimit = Carbon::now()->addMinutes(30);
                 $user->save();
             }
             return redirect()->back();
