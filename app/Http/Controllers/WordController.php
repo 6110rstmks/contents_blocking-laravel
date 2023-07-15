@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Common\BlockTarget;
 
 use Log;
-use Auth;
 use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
 
@@ -32,7 +31,8 @@ class WordController extends Controller
         $lists3 = Word::all()->where('genre', 3);
         $cnt = $this->blockTarget->getCnt("Word");
         $nowTime = Carbon::now();
-        $endTime = Auth::user()->timeLimit;
+        $user = User::find(1);
+        $endTime = $user->timeLimit;
 
         $this->timeComparison($nowTime, $endTime);
 
@@ -93,16 +93,16 @@ class WordController extends Controller
     public function timeComparison($nowTime, $endTime) {
         if (!is_null($endTime) && $nowTime->gte($endTime)) {
             Word::where('disableFlg', 1)->update(['disableFlg' => 0]);
-            Auth::user()->save();
-            if (Auth::user()->dayLimit === 0) {
-                Auth::user()->dayLimit = 1;
-                Auth::user()->save();
+            $user = User::find(1);
+            if ($user->dayLimit === 0) {
+                $user->dayLimit = 1;
+                $user->save();
             }
         }
     }
 
     public function temporaryUnblock(Word $word) {
-        if (Auth::user()->dayLimit === 1) {
+        if (User::find(1)->dayLimit === 1) {
             return \Redirect::back()->withErrors(['You have reached the limit of unblock attempts for today.']);
         }
 
