@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Word;
+use App\Models\User;
 use App\Common\BlockTarget;
 
 use Log;
 use Auth;
 use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
+
 
 
 class WordController extends Controller
