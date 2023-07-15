@@ -77,6 +77,6 @@ Route::group([
 
     Route::get('/dev-block-test-page', [WordController::class, 'testBlock']);
 
-    Route::post('/return_word', [WordController::class, 'block'])
+    Route::post('/return_word', [YoutubeChannelController::class, 'block'])
         ->name('ricepizza');
 });

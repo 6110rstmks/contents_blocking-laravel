@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\YoutubeChannel;
 use App\Models\YoutubeApi;
+use App\Models\Word;
 use App\Imports\YoutubeChannelsImport;
 use Exception;
 use Storage;
@@ -55,17 +56,33 @@ class YoutubeChannelController extends Controller
     public function block(Request $request) {
         $videoID = $request->input('videoid');
 
-        $channel_name = $this->getChannelName($videoID);
-        if (YoutubeChannel::where('name', $channel_name)->count() > 0) {
-            return 1;
-        } else {
-            return 0;
+        $apiData = $this->getApiData($videoID);
+        [$channelName, $title] = $apiData;
+        $words_in_db = Word::all()->where('disableFlg', 0)->pluck("name");
+        $title = preg_replace('/　/u', '', $title);  // delete multibyte space
+        $title = str_replace(' ', '', $title); // delete singlebyte space
+
+        // stripos() is case-insensitive version of strpos()
+        foreach ($words_in_db as $data) {
+            if (stripos($title, $data) != false || stripos($title, $data) === 0) {
+                Log::debug($data);
+                return $data;
+            }
         }
+        
+        if (YoutubeChannel::where('name', $channelName)->count() > 0) {
+            return 1;
+        }
+        return 0;
     }
 
-    public function getChannelName($videoID) {
+
+
+    public function getApiData($videoID) {
         $API_KEY =  YoutubeApi::first()->key;
-        Log::debug($API_KEY);
+        if (is_null($API_KEY)) {
+            return "APIが設定されていません。";
+        }
         $url = "https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" . $videoID . "&key=" . $API_KEY;
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -75,11 +92,15 @@ class YoutubeChannelController extends Controller
         curl_close($curl);
 
         $data2 = json_decode($data, true);
+        Log::debug($data2);
 
-        $items = $data2['items'][0];
+        $items = $data2['items'][0]["snippet"];
 
-        $data3 = $items["snippet"];
-        return $data3["channelTitle"];
+        $dataArray = [];
+
+        array_push($dataArray, $items["channelTitle"], $items["title"]);
+
+        return $dataArray;
     }
 
     // imported files is must be txt file.
