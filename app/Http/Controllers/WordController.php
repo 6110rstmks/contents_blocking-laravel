@@ -41,7 +41,7 @@ class WordController extends Controller
         Log::debug($interval);
         Log::debug($interval->invert);
 
-        if ($interval->invert == 1) {
+        if ($interval->invert == 0) {
         } else {
             $interval = null;
         }
