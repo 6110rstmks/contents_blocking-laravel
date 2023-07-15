@@ -72,7 +72,7 @@ class WordController extends Controller
 
     public function block(Request $request) {
         $nowTime = Carbon::now();
-        $endTime = User::id(1)->timeLimit;
+        $endTime = User::find(1)->timeLimit;
         $this->timeComparison($nowTime, $endTime);
 
         $words_in_db = Word::all()->where('disableFlg', 0)->pluck("name");
@@ -114,7 +114,7 @@ class WordController extends Controller
             $word->disableFlg += 1;
             $word->save();
             if ($CntOfDisabledBlockedWord === 0) {
-                User::id(1)->timeLimit = Carbon::now()->addMinutes(30);
+                User::find(1)->timeLimit = Carbon::now()->addMinutes(30);
                 User::save();
             }
             return redirect()->back();
