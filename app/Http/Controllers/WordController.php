@@ -16,8 +16,6 @@ class WordController extends Controller
 {
     protected $blockTarget;
 
-    public $endTime;
-
     public function __construct(BlockTarget $blockTarget) {
         $this->blockTarget = $blockTarget;
     }
@@ -72,11 +70,10 @@ class WordController extends Controller
 
     public function block(Request $request) {
         $nowTime = Carbon::now();
-        $endTime = Auth::user()->timeLimit;
+        $endTime = User::id(1)->timeLimit;
         $this->timeComparison($nowTime, $endTime);
 
         $words_in_db = Word::all()->where('disableFlg', 0)->pluck("name");
-        // Log::debug($words_in_db);
         $title = $request->input('title');
         $title = preg_replace('/　/u', '', $title);  // delete multibyte space
         $title = str_replace(' ', '', $title); // delete singlebyte space
@@ -84,6 +81,7 @@ class WordController extends Controller
         // stripos() is case-insensitive version of strpos()
         foreach ($words_in_db as $data) {
             if (stripos($title, $data) != false || stripos($title, $data) === 0) {
+                Log::debug($data);
                 return $data;
             }
         }
@@ -93,7 +91,6 @@ class WordController extends Controller
     public function timeComparison($nowTime, $endTime) {
         if (!is_null($endTime) && $nowTime->gte($endTime)) {
             Word::where('disableFlg', 1)->update(['disableFlg' => 0]);
-            Auth::user()->timeLimit = null;
             Auth::user()->save();
             if (Auth::user()->dayLimit === 0) {
                 Auth::user()->dayLimit = 1;
@@ -103,7 +100,6 @@ class WordController extends Controller
     }
 
     public function temporaryUnblock(Word $word) {
-
         if (Auth::user()->dayLimit === 1) {
             return \Redirect::back()->withErrors(['You have reached the limit of unblock attempts for today.']);
         }
