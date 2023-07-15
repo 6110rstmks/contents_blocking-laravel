@@ -42,7 +42,7 @@ class WordController extends Controller
         Log::debug($interval->invert);
 
         if ($interval->invert) {
-            $diffTime = $nowTime->diffInMinutes($endTime);
+            // $diffTime = $interval
         } else {
             $diffTime = null;
         }
@@ -54,7 +54,7 @@ class WordController extends Controller
                 'lists2' => $lists2,
                 'lists3' => $lists3,
                 'cnt' => $cnt,
-                'diffTime'=> $diffTime
+                'diffTime'=> $interval
             ]);
     }
 
