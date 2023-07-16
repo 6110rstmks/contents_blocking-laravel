@@ -32,9 +32,7 @@ class WordController extends Controller
         $cnt = $this->blockTarget->getCnt("Word");
         $nowTime = Carbon::now();
         $user = User::find(1);
-        $endTime = $user->timeLimit;
-
-        $this->timeComparison($nowTime, $endTime);
+        $this->timeComparison($nowTime, $user);
 
         $interval = $nowTime->diffAsCarbonInterval($endTime, false);
 
@@ -78,8 +76,8 @@ class WordController extends Controller
 
     public function block(Request $request) {
         $nowTime = Carbon::now();
-        $endTime = User::find(1)->timeLimit;
-        $this->timeComparison($nowTime, $endTime);
+        $user = User::find(1);
+        $this->timeComparison($nowTime, $user);
 
         $words_in_db = Word::all()->where('disableFlg', 0)->pluck("name");
         $title = $request->input('title');
@@ -95,7 +93,9 @@ class WordController extends Controller
         return 0;
     }
 
-    public function timeComparison($nowTime, $endTime) {
+    public function timeComparison($nowTime, $user) {
+        $endTime = $user->timeLimit;
+
         if (!is_null($endTime) && $nowTime->gte($endTime)) {
             Word::where('disableFlg', 1)->update(['disableFlg' => 0]);
             $user = User::find(1);
@@ -103,6 +103,11 @@ class WordController extends Controller
                 $user->dayLimit = 1;
                 $user->save();
             }
+
+            $user->timeLimit = null;
+            $user->save();
+
+
         }
     }
 
