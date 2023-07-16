@@ -72,7 +72,10 @@ Route::group([
     Route::post('/site-csv-import', [SiteController::class, 'import'])
         ->name('site-csv-import');
 
-    Route::post('/word_unblock/{word}', [WordController::class, 'temporaryUnblock'])
+    Route::post('/word_temporary_unblock/{word}', [WordController::class, 'temporaryUnblock'])
+        ->name('word-temporary-unblock');
+
+    Route::post('/word_unblock/{word}', [WordController::class, 'unblock'])
         ->name('word-unblock');
 
     Route::get('/dev-block-test-page', [WordController::class, 'testBlock']);

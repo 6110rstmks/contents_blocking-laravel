@@ -19,7 +19,7 @@
         <div style="display:flex; font-size: 25px">
             <div>{{$name->name}}</div>
             @if ($name->disableFlg === 0)
-                <form action="{{route('word-unblock', $name)}}" style="margin-left: 15px" method="POST">
+                <form action="{{route('word-temporary-unblock', $name)}}" style="margin-left: 15px" method="POST">
                 @csrf
                     <button style="font-size: 25px">unblock</button>
                 </form>
