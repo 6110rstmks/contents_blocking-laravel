@@ -32,6 +32,8 @@ class WordController extends Controller
         $cnt = $this->blockTarget->getCnt("Word");
         $nowTime = Carbon::now();
         $user = User::find(1);
+        $endTime = $user->timeLimit;
+
         $this->timeComparison($nowTime, $user);
 
         $interval = $nowTime->diffAsCarbonInterval($endTime, false);
