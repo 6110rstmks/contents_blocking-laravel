@@ -38,9 +38,6 @@ class WordController extends Controller
 
         $interval = $nowTime->diffAsCarbonInterval($endTime, false);
 
-        Log::debug($interval);
-        Log::debug($interval->invert);
-
         if ($interval->invert == 0) {
         } else {
             $interval = null;
@@ -92,7 +89,6 @@ class WordController extends Controller
         // stripos() is case-insensitive version of strpos()
         foreach ($words_in_db as $data) {
             if (stripos($title, $data) != false || stripos($title, $data) === 0) {
-                Log::debug($data);
                 return $data;
             }
         }

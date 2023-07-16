@@ -49,7 +49,6 @@ class SiteController extends Controller
     public function block() {
         $url = $request->input('title');
         $url = preg_replace( "#^[^:/.]*[:/]+#i", "", $url );
-        Log::debug($url);
         if (Site::where('name', $url)->count() > 0) {
             return 1;
         } else {

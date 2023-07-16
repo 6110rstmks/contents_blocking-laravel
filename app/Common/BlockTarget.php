@@ -56,13 +56,9 @@ class BlockTarget {
         // $csvを元に行単位のコレクション作成。explodeで改行ごとに分解
         $uploadedData = collect(explode("\n", $txtFile));
 
-        Log::debug($model);
-
         if ($model === "Word") {
             foreach ($uploadedData as $row) {
                 $NameGenreArray = explode(', ', $row);
-                Log::debug($NameGenreArray);
-
                 if ($modelPath::where('name', $row)->count() > 0 || empty($row)) {
                     continue;
                 }

@@ -89,7 +89,6 @@ class YoutubeChannelController extends Controller
         curl_close($curl);
 
         $data2 = json_decode($data, true);
-        Log::debug($data2);
 
         $items = $data2['items'][0]["snippet"];
 

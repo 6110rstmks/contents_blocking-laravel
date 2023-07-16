@@ -30,9 +30,9 @@ class LimitRelease extends Command
      */
     public function handle()
     {
-        Log::debug('こんにちは');
         $user = User::where('id', 1)->first();
         $user->dayLimit = 0;
         $user->save();
+        Log::debug('oiuoiuiuiu');
     }
 }
