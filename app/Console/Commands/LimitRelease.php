@@ -33,6 +33,5 @@ class LimitRelease extends Command
         $user = User::where('id', 1)->first();
         $user->dayLimit = 0;
         $user->save();
-        Log::debug('oiuoiuiuiu');
     }
 }

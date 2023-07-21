@@ -10,6 +10,7 @@ use App\Common\BlockTarget;
 use Log;
 use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
+use App\Jobs\DisableProcess;
 
 
 
@@ -21,6 +22,7 @@ class WordController extends Controller
         $this->blockTarget = $blockTarget;
     }
 
+    // 開発環境のテスト用ページを返すメソッド。
     public function testBlock() {
         return view('test-page');
     }
@@ -113,7 +115,11 @@ class WordController extends Controller
         }
     }
 
-    public function unblock() {
+    public function unblock(Word $word) {
+        DisableProcess::dispatch($word)->delay(now()->addMinutes(15));
+        $word->disableFlg = 1;
+        $word->save();
+        return redirect()->back();
 
     }
 
@@ -123,12 +129,13 @@ class WordController extends Controller
             return \Redirect::back()->withErrors(['You have reached the limit of unblock attempts for today.']);
         }
 
-        $CntOfDisabledBlockedWord = Word::where('disableFlg', 1)->count();
+        $CntOfDisabledBlockedWord = Word::where(['disableFlg', 1],
+                                                ['genre', 2])->count();
 
         if ($CntOfDisabledBlockedWord >= 3) {
             return \Redirect::back()->withErrors(['the number of blocking per day meets the limit.']);
         } elseif ($CntOfDisabledBlockedWord <= 2 && $CntOfDisabledBlockedWord >= 0) {
-            $word->disableFlg += 1;
+            $word->disableFlg = 1;
             $word->save();
             if ($CntOfDisabledBlockedWord === 0) {
                 $user = User::find(1);

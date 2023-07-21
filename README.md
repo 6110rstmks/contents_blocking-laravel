@@ -20,5 +20,17 @@ one ok rock -> oneokrock
 ### YoutubeChannel
 
 
+# 本番環境にデプロイ後
+
+run the below cmd
+
+php artisan queue:table
+=========================
+
+queueを使用してyoutubechannelblockのblock メソッド内で　
+
+
+
+
 
 
