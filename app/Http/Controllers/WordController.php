@@ -128,9 +128,7 @@ class WordController extends Controller
         if (User::find(1)->dayLimit === 1) {
             return \Redirect::back()->withErrors(['You have reached the limit of unblock attempts for today.']);
         }
-
-        $CntOfDisabledBlockedWord = Word::where(['disableFlg', 1],
-                                                ['genre', 2])->count();
+        $CntOfDisabledBlockedWord = Word::where('disableFlg', 1)->where('genre', 2)->count();
 
         if ($CntOfDisabledBlockedWord >= 3) {
             return \Redirect::back()->withErrors(['the number of blocking per day meets the limit.']);
