@@ -18,14 +18,14 @@
         @foreach ($lists2 as $name)
         <div style="display:flex; font-size: 25px">
             <div>{{$name->name}}</div>
-            @if ($name->disableFlg === 0)
+            <!-- @if ($name->disableFlg === 0)
                 <form action="{{route('word-temporary-unblock', $name)}}" style="margin-left: 15px" method="POST">
                 @csrf
                     <button style="font-size: 25px">unblock</button>
                 </form>
             @elseif ($name->disableFlg == 1)
                 <span style="font-size: 25px; border: 1px black solid; margin-left: 15px">Now enable</span>
-            @endif
+            @endif -->
         </div>
         @endforeach
     </section>
