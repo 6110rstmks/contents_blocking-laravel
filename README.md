@@ -19,6 +19,31 @@ one ok rock -> oneokrock
 
 ### YoutubeChannel
 
+# Todo after cloning on local environment
+$ composer install
+
+- rename .env.example file
+
+$ php artisan key:generate
+
+$ php artisan serve
+
+ setting mysql
+
+$ create database laravel;
+
+$ CREATE USER "ss119" IDENTIFIED BY "password";
+
+$ GRANT ALL PRIVILEGES ON * . * TO 'ss119';
+
+========================
+
+$ php artisan migrate
+
+- register username and password in users table.
+
+
+
 
 # 本番環境にデプロイ後
 
