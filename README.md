@@ -24,6 +24,8 @@ $ composer install
 
 - rename .env.example file
 
+- edit DB_username and DB_password .env file 
+
 $ php artisan key:generate
 
 $ php artisan serve
@@ -41,8 +43,6 @@ $ GRANT ALL PRIVILEGES ON * . * TO 'ss119';
 $ php artisan migrate
 
 - register username and password in users table.
-
-
 
 
 # 本番環境にデプロイ後
