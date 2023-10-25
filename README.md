@@ -22,10 +22,6 @@ one ok rock -> oneokrock
 # Todo after cloning on local environment
 $ composer install
 
-- rename .env.example file
-
-- edit DB_username and DB_password .env file 
-
 $ php artisan key:generate
 
 $ php artisan serve
@@ -38,11 +34,16 @@ $ CREATE USER "ss119" IDENTIFIED BY "password";
 
 $ GRANT ALL PRIVILEGES ON * . * TO 'ss119';
 
+- rename .env.example file
+
+- edit DB_username and DB_password .env file 
+
 ========================
 
 $ php artisan migrate
 
 - register username and password in users table.
+> INSERT INTO users (email, password) values ("soras.k.m.tj16@gmail.com", "$2y$10$KCQzuQxeCa3ODHTCOJ2WS.OFdUtuOknegDkf5Pj.q/PHnjt0pSKKq");
 
 
 # 本番環境にデプロイ後

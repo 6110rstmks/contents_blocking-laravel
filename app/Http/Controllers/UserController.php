@@ -12,8 +12,12 @@ class UserController extends Controller
     public function login(Request $request) {
         $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials))
+        // if (Auth::attempt($credentials))
+        if (Auth::guard('web')->attempt($credentials, false))
         {
+
+            // session hijacking countermeasure
+            $request->session()->regenerate();
             return redirect()->route('register-page');
 
         } else {

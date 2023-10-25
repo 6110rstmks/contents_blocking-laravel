@@ -43,7 +43,7 @@
         </div>
     </section>
 
-
+    <!-- word -->
     <section class="word" style="margin-top: 100px">
         <div style="display:flex">
             <div>
@@ -109,7 +109,7 @@
     @if (App\Models\YoutubeApi::all()->count() == 0)
     <div style="margin-top:100px">
         <h3>YoutubeAPI</h3>
-        <form action="{{ route('register-api') }}" method="POST" >
+        <form action="{{route('register-api')}}" method="POST" >
             @csrf
             <input type="text" name="name">
             <button>Submit</button>
@@ -118,6 +118,18 @@
     @else
     <div style="margin-top : 60px">Youtube Api is already registered.</div>
     @endif
+
+    <section style="margin-top: 100px">
+        <h2>Sign up</h2>
+        <form action="{{ route('register-user') }}" method="POST">
+            @csrf
+            <div>Email</div>
+            <input type="email" name="email">
+            <span>PASSWORD</span>
+            <input type="password" name="password">
+            <button>Submit</button>
+        </form>
+    </section>
 </div>
 
 </body>

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Word;
 use App\Models\User;
 use App\Common\BlockTarget;
-
+use Illuminate\Support\Facades\Auth;
 use Log;
 use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
@@ -28,15 +28,24 @@ class WordController extends Controller
     }
 
     public function list() {
-        $lists1 = Word::all()->where('genre', 1);
-        $lists2 = Word::all()->where('genre', 2);
-        $lists3 = Word::all()->where('genre', 3);
+        $authenticated_user = Auth::user();
+
+        Log::info($authenticated_user);
+        $words = $authenticated_user->words;
+
+        Log::info($words);
+
+        $lists1 = $words->where('genre', 1);
+        $lists2 = $words->where('genre', 2);
+        $lists3 = $words->where('genre', 3);
+        // $lists1 = Word::all()->where('genre', 1);
+        // $lists2 = Word::all()->where('genre', 2);
+        // $lists3 = Word::all()->where('genre', 3);
         $cnt = $this->blockTarget->getCnt("Word");
         $nowTime = Carbon::now();
-        $user = User::find(1);
-        $endTime = $user->timeLimit;
+        $endTime = $authenticated_user->timeLimit;
 
-        $this->timeComparison($nowTime, $user);
+        $this->timeComparison($nowTime, $authenticated_user);
 
         $interval = $nowTime->diffAsCarbonInterval($endTime, false);
 
@@ -44,7 +53,6 @@ class WordController extends Controller
         } else {
             $interval = null;
         }
-
 
         return view('word-list')
             ->with([
@@ -57,6 +65,8 @@ class WordController extends Controller
     }
 
     public function register(Request $request) {
+        $auth_user = Auth::user();
+
         $request->validate([
             'name' => 'required|unique:words',
             'genre'=> 'required'
@@ -70,10 +80,20 @@ class WordController extends Controller
 
         $number = $request->genre;
 
-        Word::create([
-           'name' => $blockWord,
-           'genre'=> $number,
-        ]);
+        // Word::create([
+        //    'name' => $blockWord,
+        //    'genre'=> $number,
+        // ]);
+
+        $word = new Word();
+
+        $word->name = $blockWord;
+        $word->genre = $number;
+
+        $word->save();
+
+        $auth_user->words()->syncWithoutDetaching($word->id);
+
 
         return redirect()->route('register-page');
     }

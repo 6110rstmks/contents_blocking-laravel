@@ -45,4 +45,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function words()
+    {
+        return $this->belongsToMany(Word::class, 'user_word');
+    }
 }

@@ -82,4 +82,7 @@ Route::group([
 
     Route::post('/return_word', [YoutubeChannelController::class, 'block'])
         ->name('ricepizza');
+
+    Route::post('/register_user', [UserController::class, 'register'])
+    ->name('register-user');
 });
