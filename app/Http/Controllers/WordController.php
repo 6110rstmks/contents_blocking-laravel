@@ -30,18 +30,12 @@ class WordController extends Controller
     public function list() {
         $authenticated_user = Auth::user();
 
-        Log::info($authenticated_user);
         $words = $authenticated_user->words;
-
-        Log::info($words);
 
         $lists1 = $words->where('genre', 1);
         $lists2 = $words->where('genre', 2);
         $lists3 = $words->where('genre', 3);
-        // $lists1 = Word::all()->where('genre', 1);
-        // $lists2 = Word::all()->where('genre', 2);
-        // $lists3 = Word::all()->where('genre', 3);
-        $cnt = $this->blockTarget->getCnt("Word");
+        $cnt = $this->blockTarget->getCnt("words");
         $nowTime = Carbon::now();
         $endTime = $authenticated_user->timeLimit;
 
@@ -77,24 +71,12 @@ class WordController extends Controller
         if (strpos($blockWord, '　') !== false || strpos($blockWord, ' ') !== false) {
             return \Redirect::back()->withErrors(['Don\'t put spaces between words']);
         }
-
         $number = $request->genre;
-
-        // Word::create([
-        //    'name' => $blockWord,
-        //    'genre'=> $number,
-        // ]);
-
         $word = new Word();
-
         $word->name = $blockWord;
         $word->genre = $number;
-
         $word->save();
-
         $auth_user->words()->syncWithoutDetaching($word->id);
-
-
         return redirect()->route('register-page');
     }
 
@@ -127,11 +109,8 @@ class WordController extends Controller
                 $user->dayLimit = 1;
                 $user->save();
             }
-
             $user->timeLimit = null;
             $user->save();
-
-
         }
     }
 
@@ -140,7 +119,6 @@ class WordController extends Controller
         $word->disableFlg = 1;
         $word->save();
         return redirect()->back();
-
     }
 
     // genre2に該当するワードのブロッキングを30分間だけ解除
@@ -148,6 +126,7 @@ class WordController extends Controller
         if (User::find(1)->dayLimit === 1) {
             return \Redirect::back()->withErrors(['You have reached the limit of unblock attempts for today.']);
         }
+
         $CntOfDisabledBlockedWord = Word::where('disableFlg', 1)->where('genre', 2)->count();
 
         if ($CntOfDisabledBlockedWord >= 3) {

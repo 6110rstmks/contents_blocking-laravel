@@ -50,4 +50,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Word::class, 'user_word');
     }
+    public function youtube_channels()
+    {
+        return $this->belongsToMany(YoutubeChannel::class, 'user_youtube_channel');
+    }
 }

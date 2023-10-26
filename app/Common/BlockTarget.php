@@ -3,20 +3,20 @@
 namespace App\Common;
 use Log;
 use Storage;
+use Illuminate\Support\Facades\Auth;
 
 class BlockTarget {
 
     public function getModel($model) {
 
-        $model = "App\Models\\" . $model;
-        $lists =  $model::all();
-
+        $authenticated_user = Auth::user();
+        $lists = $authenticated_user->youtube_channels;
         return $lists;
     }
 
     public function getCnt($model) {
-        $model = "App\Models\\" . $model;
-        $cnt = $model::all()->count();
+        $authenticated_user = Auth::user();
+        $cnt = $authenticated_user->$model->count();
         return $cnt;
     }
 
@@ -26,7 +26,6 @@ class BlockTarget {
         ], [
             'name.unique' => 'This channel_name is already registered.'
         ]);
-
 
         YoutubeChannel::create([
            'name' => $request->channel_name

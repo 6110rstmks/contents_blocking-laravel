@@ -11,6 +11,7 @@ use Exception;
 use Storage;
 use App\Common\BlockTarget;
 use Log;
+use Illuminate\Support\Facades\Auth;
 
 
 class YoutubeChannelController extends Controller
@@ -23,9 +24,10 @@ class YoutubeChannelController extends Controller
     }
 
     public function list() {
-        $lists = $this->blockTarget->getModel("YoutubeChannel");
 
-        $cnt = $this->blockTarget->getCnt("YoutubeChannel");
+        $lists = $this->blockTarget->getModel("youtube_channels");
+
+        $cnt = $this->blockTarget->getCnt("youtube_channels");
         $return_file = 'youtube-list';
         return view($return_file)
             ->with([
