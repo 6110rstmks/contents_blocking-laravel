@@ -146,13 +146,13 @@ class WordController extends Controller
     }
 
     public function import(Request $request) {
-        $this->blockTarget->import("Word", $request);
+        $this->blockTarget->import("words", $request);
         return redirect()->back();
     }
 
     public function download() {
         $path = public_path('/storage/dummy.txt');
-        $fileName = $this->blockTarget->download("Word", $path);
+        $fileName = $this->blockTarget->download("words", $path);
         return response()->download($path, $fileName, ['Content-Type: text/plain']);
     }
 }

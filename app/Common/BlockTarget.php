@@ -35,7 +35,7 @@ class BlockTarget {
     }
 
     public function import($model, $request) {
-        $modelPath = "App\Models\\" . $model;
+        $authenticated_user = Auth::user();
 
         if ($request->hasFile('txtFile')) {
             //拡張子がCSVであるかの確認
@@ -55,7 +55,7 @@ class BlockTarget {
         // $csvを元に行単位のコレクション作成。explodeで改行ごとに分解
         $uploadedData = collect(explode("\n", $txtFile));
 
-        if ($model === "Word") {
+        if ($model === "words") {
             foreach ($uploadedData as $row) {
                 $NameGenreArray = explode(', ', $row);
                 if ($modelPath::where('name', $row)->count() > 0 || empty($row)) {
@@ -85,10 +85,11 @@ class BlockTarget {
 
     public function download($model, $path) {
         $fileName = $model . '.txt';
-        $modelPath = "App\Models\\" . $model;
+        $authenticated_user = Auth::user();
 
-        if ($model === "Word") {
-            $name_lists = $modelPath::all()->pluck('genre', 'name');
+
+        if ($model === "words") {
+            $name_lists = $authenticated_user->$model->pluck('genre', 'name');
             $data = fopen($path, "w");
             foreach($name_lists as $name => $genre) {
                 fwrite($data, $name);

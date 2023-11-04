@@ -53,6 +53,9 @@ run the below cmd
 php artisan queue:table
 =========================
 
+# crantab -e に記載すること
+0 15 * * * cd /var/www/html/example-app && php artisan limit:daily >> /dev/null 2>&1
+
 queueを使用してyoutubechannelblockのblock メソッド内で　
 
 
