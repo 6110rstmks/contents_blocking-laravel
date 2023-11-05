@@ -17,8 +17,10 @@ class SiteController extends Controller
     }
 
     public function list() {
-        $lists = Site::all();
-        $cnt = $this->blockTarget->getCnt("Site");
+        // $lists = Site::all();
+        $lists = $this->blockTarget->getModel("sites");
+
+        $cnt = $this->blockTarget->getCnt("sites");
 
         return view('site-list')
             ->with([

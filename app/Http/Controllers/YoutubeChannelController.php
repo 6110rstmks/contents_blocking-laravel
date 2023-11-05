@@ -38,6 +38,7 @@ class YoutubeChannelController extends Controller
     }
 
     public function register(Request $request) {
+        $auth_user = Auth::user();
         $request->validate([
             'name' => 'required|unique:youtube_channels'
         ]);
@@ -47,11 +48,10 @@ class YoutubeChannelController extends Controller
         if (strpos($channelName, '　') !== false || strpos($channelName, ' ') !== false) {
             return \Redirect::back()->withErrors(['Don\'t put spaces between words']);
         }
-
-        YoutubeChannel::create([
-           'name' => $channelName
-        ]);
-
+        $youtubeChannel = new YoutubeChannel();
+        $youtubeChannel->name = $channelName;
+        $youtubeChannel->save();
+        $auth_user->youtube_channels()->syncWithoutDetaching($youtubeChannel->id);
         return redirect()->route('register-page');
     }
 

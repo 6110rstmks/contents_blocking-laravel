@@ -14,10 +14,11 @@
 <div style="display: flex; margin-top: 100px">
 
     <section class="second" style="flex: 50%">
-    <div>解除可</div>
+    <div>解除可(右はid)</div>
         @foreach ($lists2 as $name)
         <div style="display:flex; font-size: 25px">
             <div>{{$name->name}}</div>
+            <div style="margin-left: 50px">{{ $name->id }}</div>
             <!-- @if ($name->disableFlg === 0)
                 <form action="{{route('word-temporary-unblock', $name)}}" style="margin-left: 15px" method="POST">
                 @csrf

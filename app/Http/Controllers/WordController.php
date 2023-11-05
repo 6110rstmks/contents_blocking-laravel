@@ -121,7 +121,7 @@ class WordController extends Controller
         return redirect()->back();
     }
 
-    // genre2に該当するワードのブロッキングを30分間だけ解除
+    // release blocking of 'genre 2' words for thirty minutes
     public function temporaryUnblock(Word $word) {
         if (User::find(1)->dayLimit === 1) {
             return \Redirect::back()->withErrors(['You have reached the limit of unblock attempts for today.']);

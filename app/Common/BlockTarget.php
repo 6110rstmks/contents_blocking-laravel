@@ -10,7 +10,8 @@ class BlockTarget {
     public function getModel($model) {
 
         $authenticated_user = Auth::user();
-        $lists = $authenticated_user->youtube_channels;
+        // $lists = $authenticated_user->youtube_channels;
+        $lists = $authenticated_user->$model;
         return $lists;
     }
 

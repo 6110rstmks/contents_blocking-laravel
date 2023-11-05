@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\YoutubeChannelController;
 use App\Http\Controllers\WordController;
+use App\Http\Controllers\SiteController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,4 +23,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/return_youtube', [YoutubeChannelController::class, 'block']);
 Route::post('/return_word', [WordController::class, 'block']);
+Route::post('/return_site', [SiteController::class, 'block']);
 
