@@ -61,6 +61,7 @@ class SiteController extends Controller
                 return $data;
             }
         }
+        return 0;
     }
 
     public function import(Request $request) {

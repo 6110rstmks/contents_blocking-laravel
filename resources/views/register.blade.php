@@ -109,6 +109,7 @@
     @if (App\Models\YoutubeApi::all()->count() == 0)
     <div style="margin-top:100px">
         <h3>YoutubeAPI</h3>
+        <h4>keepにほかんしてる</h4>
         <form action="{{route('register-api')}}" method="POST" >
             @csrf
             <input type="text" name="name">
