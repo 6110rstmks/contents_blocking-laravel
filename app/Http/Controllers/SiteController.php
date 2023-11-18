@@ -57,7 +57,7 @@ class SiteController extends Controller
         $urls_in_db = Site::all()->pluck("name");
 
         foreach ($urls_in_db as $data) {
-            if (strpos($title, $data) != false || strpos($title, $data) === 0) {
+            if (strpos($url, $data) != false || strpos($url, $data) === 0) {
                 return 1;
             }
         }
