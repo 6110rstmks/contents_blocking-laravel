@@ -58,7 +58,7 @@ class SiteController extends Controller
 
         foreach ($urls_in_db as $data) {
             if (strpos($title, $data) != false || strpos($title, $data) === 0) {
-                return 1;
+                return $data;
             }
         }
         return 0;
