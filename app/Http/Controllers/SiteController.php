@@ -50,7 +50,7 @@ class SiteController extends Controller
         return redirect()->route('register-page');
     }
 
-    public function block() {
+    public function block(Request $request) {
         $url = $request->input('title');
         $url = preg_replace( "#^[^:/.]*[:/]+#i", "", $url );
 
@@ -58,7 +58,7 @@ class SiteController extends Controller
 
         foreach ($urls_in_db as $data) {
             if (strpos($title, $data) != false || strpos($title, $data) === 0) {
-                return $data;
+                return 1;
             }
         }
         return 0;
