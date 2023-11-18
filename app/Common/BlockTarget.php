@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 class BlockTarget {
 
     public function getModel($model) {
-
         $authenticated_user = Auth::user();
         // $lists = $authenticated_user->youtube_channels;
         $lists = $authenticated_user->$model;
@@ -39,7 +38,7 @@ class BlockTarget {
         $authenticated_user = Auth::user();
 
         if ($request->hasFile('txtFile')) {
-            //拡張子がCSVであるかの確認
+            // check if the extension of file is txt
             if ($request->txtFile->getClientOriginalExtension() !== "txt") {
             return \Redirect::back()->withErrors(['不適切な拡張子です。']);
 
@@ -53,42 +52,51 @@ class BlockTarget {
 
         $txtFile = Storage::disk('local')->get("public/txt/{$newTxtFileName}");
 
-        // $csvを元に行単位のコレクション作成。explodeで改行ごとに分解
+        // $txtを元に行単位のコレクション作成。explodeで改行ごとに分解
         $uploadedData = collect(explode("\n", $txtFile));
 
         if ($model === "words") {
             foreach ($uploadedData as $row) {
                 $NameGenreArray = explode(', ', $row);
-                if ($modelPath::where('name', $row)->count() > 0 || empty($row)) {
+                if ($authenticated_user->$model->where('name', $row)->count() > 0 || empty($row)) {
                     continue;
                 }
-                $ModelInstance = new $modelPath();
+                $ModelInstance = new Word();
                 $ModelInstance->name = $NameGenreArray[0];
                 $ModelInstance->genre = $NameGenreArray[1];
                 $ModelInstance->save();
-                }
-            // after inserting the dataset
+                $authenticated_user->words()->syncWithoutDetaching($ModelInstance->id);
+            }
+
         } else {
             foreach ($uploadedData as $row) {
-
-                if ($modelPath::where('name', $row)->count() > 0 || empty($row)) {
+                Log::debug($row);
+                if ($authenticated_user->$model->where('name', $row)->count() > 0 || empty($row)) {
                     continue;
                 }
-                $youtubeChannels = new $modelPath();
-                $youtubeChannels->name = $row;
-                $youtubeChannels->save();
+                $modifiedModel = ucfirst(substr($model, 0, -1)); //ex)sites -> Site
+                //ex)Youtube_channel -> YoutubeChannel
+                if (strpos($modifiedModel, '_') !== false) {
+                    $underscorePos = strpos($modifiedModel, '_');
+
+                    $modifiedModel = substr_replace($modifiedModel, strtoupper($modifiedModel[$underscorePos + 1]), $underscorePos + 1, 1);
+                    $modifiedModel = str_replace('_', '', $modifiedModel);
+                }
+                $modifiedModel = "App\Models\\" . $modifiedModel;
+
+                $ModelInstance = new $modifiedModel();
+                $ModelInstance->name = $row;
+                $ModelInstance->save();
+                $authenticated_user->$model()->syncWithoutDetaching($ModelInstance->id);
+
             }
         }
-
-        // after inserting the dataset
         Storage::delete('public/txt' . $newTxtFileName);
     }
 
     public function download($model, $path) {
         $fileName = $model . '.txt';
         $authenticated_user = Auth::user();
-
-
         if ($model === "words") {
             $name_lists = $authenticated_user->$model->pluck('genre', 'name');
             $data = fopen($path, "w");

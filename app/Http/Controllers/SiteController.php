@@ -17,11 +17,8 @@ class SiteController extends Controller
     }
 
     public function list() {
-        // $lists = Site::all();
         $lists = $this->blockTarget->getModel("sites");
-
         $cnt = $this->blockTarget->getCnt("sites");
-
         return view('site-list')
             ->with([
                 'lists' => $lists,
@@ -51,10 +48,13 @@ class SiteController extends Controller
     public function block() {
         $url = $request->input('title');
         $url = preg_replace( "#^[^:/.]*[:/]+#i", "", $url );
-        if (Site::where('name', $url)->count() > 0) {
-            return 1;
-        } else {
-            return 0;
+
+        $urls_in_db = Site::all()->pluck("name");
+
+        foreach ($urls_in_db as $data) {
+            if (strpos($title, $data) != false || strpos($title, $data) === 0) {
+                return $data;
+            }
         }
     }
 
@@ -64,7 +64,7 @@ class SiteController extends Controller
     }
 
     public function download() {
-        $path = public_path('dummy.txt');
+        $path = public_path('/storage/dummy.txt');
         $fileName = $this->blockTarget->download("Site", $path);
         return response()->download($path, $fileName, ['Content-Type: text/plain']);
     }

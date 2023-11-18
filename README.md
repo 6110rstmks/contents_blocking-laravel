@@ -58,6 +58,10 @@ php artisan queue:table
 
 queueを使用してyoutubechannelblockのblock メソッド内で　
 
+=========================
+
+white listとblacklist モードを切り替えれるようにする
+
 
 
 
