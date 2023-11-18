@@ -54,4 +54,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(YoutubeChannel::class, 'user_youtube_channel');
     }
+
+    public function sites()
+    {
+        return $this->belongsToMany(Site::class, 'user_site');
+    }
 }

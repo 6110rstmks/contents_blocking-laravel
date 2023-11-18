@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Common\BlockTarget;
 use App\Models\Site;
+use Illuminate\Support\Facades\Auth;
+
 
 use Log;
 
@@ -24,11 +26,12 @@ class SiteController extends Controller
                 'lists' => $lists,
                 'cnt' => $cnt,
                 'filename' => "site"
-
             ]);
     }
 
     public function register(Request $request) {
+        $auth_user = Auth::user();
+
         $request->validate([
             'name' => 'required|unique:sites'
         ]);
@@ -38,9 +41,11 @@ class SiteController extends Controller
         if (strpos($blockSite, '　') !== false || strpos($blockSite, ' ') !== false) {
             return \Redirect::back()->withErrors(['Don\'t put spaces between words']);
         }
-        Site::create([
-           'name' => $blockSite,
-        ]);
+
+        $siteModel = new Site();
+        $siteModel->name = $blockSite;
+        $siteModel->save();
+        $auth_user->youtube_channels()->syncWithoutDetaching($siteModel->id);
 
         return redirect()->route('register-page');
     }
