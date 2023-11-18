@@ -98,9 +98,10 @@ class BlockTarget {
     public function download($model, $path) {
         $fileName = $model . '.txt';
         $authenticated_user = Auth::user();
+        $name_lists = $authenticated_user->$model->pluck('genre', 'name');
+        Log::debug($name_lists);
+        $data = fopen($path, "w");
         if ($model === "words") {
-            $name_lists = $authenticated_user->$model->pluck('genre', 'name');
-            $data = fopen($path, "w");
             foreach($name_lists as $name => $genre) {
                 fwrite($data, $name);
                 fwrite($data, ", ");
@@ -108,9 +109,9 @@ class BlockTarget {
                 fwrite($data, "\n");
             }
         } else {
-            $name_lists = $modelPath::all()->pluck('name');
-            $data = fopen($path, "w");
-            foreach($name_lists as $name) {
+            // $name_lists = $modelPath::all()->pluck('name');
+            // $data = fopen($path, "w");
+            foreach($name_lists as $name => $genre) {
                 fwrite($data, $name);
                 fwrite($data, "\n");
             }
