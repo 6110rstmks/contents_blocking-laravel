@@ -4,6 +4,7 @@ namespace App\Common;
 use Log;
 use Storage;
 use Illuminate\Support\Facades\Auth;
+use App\Model\Word;
 
 class BlockTarget {
 
