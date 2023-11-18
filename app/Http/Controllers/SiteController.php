@@ -45,7 +45,7 @@ class SiteController extends Controller
         $siteModel = new Site();
         $siteModel->name = $blockSite;
         $siteModel->save();
-        $auth_user->youtube_channels()->syncWithoutDetaching($siteModel->id);
+        $auth_user->sites()->syncWithoutDetaching($siteModel->id);
 
         return redirect()->route('register-page');
     }
