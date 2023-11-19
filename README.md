@@ -39,7 +39,7 @@ You can block sites that contain registered url.
 漫画, 2
 ドラマ, 2
 ```
-
+therefore, if you change to another server, you can transport data smoothly by using export and import.
 
 
 
