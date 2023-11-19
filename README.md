@@ -8,6 +8,7 @@ if it is 1, disabling word block.
 
 
 ### ・Word
+if the title of the site contain registered words, redirect the page.
 
 #### **[Warging]**:
 when registering "word",don't contain spaces in string.
@@ -15,6 +16,8 @@ you need to remove spaces and concatenate strings.<br />
 (ex)<br />
 one piece -> onepiece <br />
 one ok rock -> oneokrock
+
+Due to the program, it needs to be done as above.
 
 ### ・YoutubeChannel
 #### **[Caution]**:
