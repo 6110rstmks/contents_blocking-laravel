@@ -100,6 +100,9 @@ class WordController extends Controller
     }
 
     public function timeComparison($nowTime, $user) {
+        if (is_null($user->timeLimit)) {
+            return;
+        }
         $endTime = $user->timeLimit;
 
         if (!is_null($endTime) && $nowTime->gte($endTime)) {
