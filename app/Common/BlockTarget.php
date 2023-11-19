@@ -119,6 +119,7 @@ class BlockTarget {
                 fwrite($data, "\n");
             }
             foreach($name_lists as $name => $genre) {
+                fwrite($data, "127.0.0.1 ");
                 fwrite($data, $name);
                 fwrite($data, "\n");
             }
