@@ -118,6 +118,10 @@ class BlockTarget {
                 fwrite($data, $name);
                 fwrite($data, "\n");
             }
+            foreach($name_lists as $name => $genre) {
+                fwrite($data, $name);
+                fwrite($data, "\n");
+            }
         } else {
             foreach($name_lists as $name => $genre) {
                 fwrite($data, $name);
