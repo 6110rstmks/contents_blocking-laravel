@@ -5,9 +5,9 @@ if it is 1, disabling word block.
 You can block "Site", "Word" and "YoutubeChannel" by registering them in this system.
 
 ### Word
-in "Word",you mustn't contain spaces in string.
+when registering "word",don't contain spaces in string.
 
-you need to concatenate strings by a space.
+you need to remove spaces and concatenate strings.
 
 (ex)
 one piece -> onepiece
