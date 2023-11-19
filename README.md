@@ -20,7 +20,11 @@ one ok rock -> oneokrock
 Due to the program, it needs to be done as above.
 
 ### ・YoutubeChannel
+
+Also, if the title of a movie contain registered words, redirect the page.
+
 #### **[Caution]**:
+In order to use this function, you need to get YoutubeAPI, and register it on this system.
 
 ### ・Site
 
