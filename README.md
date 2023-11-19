@@ -48,7 +48,7 @@ $ php artisan migrate
 ]);
 
 
-# 本番環境にデプロイ後
+## 本番環境にデプロイ後
 
 run the below cmd
 
@@ -56,7 +56,7 @@ php artisan queue:table
 
 =========================
 
-# crantab -e setting
+## crantab -e setting
 0 15 * * * cd /var/www/html/example-app && php artisan limit:daily >> /dev/null 2>&1
 
 queueを使用してyoutubechannelblockのblock メソッド内で　
