@@ -78,7 +78,7 @@ class YoutubeChannelController extends Controller
     }
 
     public function getApiData($videoID) {
-        if (is_null(YoutubeApi::first()->key)) {
+        if (!isset(YoutubeApi::first()->key)) {
             return "APIが設定されていません。";
         }
         $API_KEY =  YoutubeApi::first()->key;
@@ -101,7 +101,6 @@ class YoutubeChannelController extends Controller
         return $dataArray;
     }
 
-    // imported files is must be txt file.
     public function import(Request $request) {
         $this->blockTarget->import("youtube_channels", $request);
         return redirect()->back();
