@@ -1,4 +1,4 @@
-[TL;DR]
+>[TL;DR]
 You can block "Site", "Word" and "YoutubeChannel" by registering them on server and use chrome-extension.
 
 
