@@ -47,6 +47,7 @@ $ php artisan migrate
 run the below cmd
 
 php artisan queue:table
+
 =========================
 
 # crantab -e setting
