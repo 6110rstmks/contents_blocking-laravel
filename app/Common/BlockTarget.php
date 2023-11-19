@@ -94,7 +94,7 @@ class BlockTarget {
         Storage::delete('public/txt' . $newTxtFileName);
     }
 
-    public function download($model, $path, $number) {
+    public function download($model, $path) {
         $flg = null;
         $fileName = $model . '.txt';
         $authenticated_user = Auth::user();
