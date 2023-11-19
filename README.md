@@ -37,8 +37,6 @@ $ GRANT ALL PRIVILEGES ON * . * TO 'ss119';
 
 - edit DB_username and DB_password .env file 
 
-========================
-
 $ php artisan migrate
 
 - register username and password in users table.
@@ -54,14 +52,13 @@ run the below cmd
 
 php artisan queue:table
 
-=========================
 
 ## crantab -e setting
 0 15 * * * cd /var/www/html/example-app && php artisan limit:daily >> /dev/null 2>&1
 
 queueを使用してyoutubechannelblockのblock メソッド内で　
 
-=========================
+## Functional Requirement I want to implement
 
 white listとblacklist モードを切り替えれるようにする
 
