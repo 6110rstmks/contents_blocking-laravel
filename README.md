@@ -30,6 +30,8 @@ In order to use this function, you need to get YoutubeAPI, and register it on th
 ### ・Site
 You can block sites that contain registered url.
 
+### Functions common to the three above
+download registered contents by text file
 
 # Todo after cloning on local environment
 $ composer install
