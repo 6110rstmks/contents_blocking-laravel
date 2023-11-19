@@ -71,7 +71,6 @@ class BlockTarget {
 
         } else {
             foreach ($uploadedData as $row) {
-                Log::debug($row);
                 if ($authenticated_user->$model->where('name', $row)->count() > 0 || empty($row)) {
                     continue;
                 }
@@ -98,6 +97,9 @@ class BlockTarget {
     public function download($model, $path) {
         $fileName = $model . '.txt';
         $authenticated_user = Auth::user();
+        if ($model === "sites_for_hosts") {
+            $model = "sites";
+        }
         $name_lists = $authenticated_user->$model->pluck('genre', 'name');
         Log::debug($name_lists);
         $data = fopen($path, "w");
@@ -108,9 +110,13 @@ class BlockTarget {
                 fwrite($data, $genre);
                 fwrite($data, "\n");
             }
+        } elseif ($model === "sites_for_hosts") {
+            foreach($name_lists as $name => $genre) {
+                fwrite($data, "127.0.0.1 www.");
+                fwrite($data, $name);
+                fwrite($data, "\n");
+            }
         } else {
-            // $name_lists = $modelPath::all()->pluck('name');
-            // $data = fopen($path, "w");
             foreach($name_lists as $name => $genre) {
                 fwrite($data, $name);
                 fwrite($data, "\n");

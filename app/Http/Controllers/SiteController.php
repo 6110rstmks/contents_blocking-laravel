@@ -74,4 +74,10 @@ class SiteController extends Controller
         $fileName = $this->blockTarget->download("sites", $path);
         return response()->download($path, $fileName, ['Content-Type: text/plain']);
     }
+
+    public function download_for_hostsfile() {
+        $path = public_path('/storage/dummy.txt');
+        $fileName = $this->blockTarget->download("sites_for_hosts", $path);
+        return response()->download($path, $fileName, ['Content-Type: text/plain']);
+    }
 }

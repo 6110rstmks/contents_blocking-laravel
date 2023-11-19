@@ -94,6 +94,7 @@
             </div>
             <div style="margin-left: 30px">
                 <a href="{{route('site-download')}}" style="margin-top:300px; color: red;">CSV Export</a>
+                <a href="{{route('site_for_hosts-download')}}" style="margin-top:300px; color: red;">CSV Export</a>
 
                 <form action="{{route('site-csv-import')}}" style="margin-top: 100px" method="POST" enctype="multipart/form-data">
                     @csrf

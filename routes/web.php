@@ -64,6 +64,8 @@ Route::group([
         ->name('word-download');
     Route::get('/site_download', [SiteController::class, 'download'])
         ->name('site-download');
+    Route::get('/site_for_hosts_download', [SiteController::class, 'download_for_hostsfile'])
+        ->name('site_for_hosts-download');
 
     Route::post('/youtube-csv-import', [YoutubeChannelController::class, 'import'])
         ->name('youtube-csv-import');
