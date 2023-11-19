@@ -31,7 +31,15 @@ In order to use this function, you need to get YoutubeAPI, and register it on th
 You can block sites that contain registered url.
 
 ### Functions common to the three above
-download registered contents by text file
+- download(export) registered data by text file
+- import text file.
+```word.txt
+アニメ, 2
+漫画, 2
+ドラマ, 2
+```
+
+
 
 # Todo after cloning on local environment
 $ composer install
