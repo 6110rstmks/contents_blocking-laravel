@@ -8,7 +8,7 @@ if it is 1, disabling word block.
 
 
 ### ・Word
-if the title of the site contain registered words, redirect the page.
+You can block sites that contain registered words.
 
 #### **[Warging]**:
 when registering "word",don't contain spaces in string.
@@ -21,7 +21,8 @@ Due to the program, it needs to be done as above.
 
 ### ・YoutubeChannel
 
-Also, if the title of a movie contain registered words, redirect the page.
+You can block a video of a registered channel.
+Also, if the title of a video contain registered words, redirect the page.
 
 #### **[Caution]**:
 In order to use this function, you need to get YoutubeAPI, and register it on this system.
