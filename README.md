@@ -39,7 +39,10 @@ $ GRANT ALL PRIVILEGES ON * . * TO 'ss119';
 $ php artisan migrate
 
 - register username and password in users table.
-> INSERT INTO users (email, password) values ("soras.k.m.tj16@gmail.com", "$2y$10$KCQzuQxeCa3ODHTCOJ2WS.OFdUtuOknegDkf5Pj.q/PHnjt0pSKKq");
+> User::create([
+    'email' => 'john@example.com',
+    'password' => bcrypt('secret'),
+]);
 
 
 # 本番環境にデプロイ後
