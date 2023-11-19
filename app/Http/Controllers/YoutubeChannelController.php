@@ -42,9 +42,7 @@ class YoutubeChannelController extends Controller
         $request->validate([
             'name' => 'required|unique:youtube_channels'
         ]);
-
         $channelName = ltrim($request->name);
-
         if (strpos($channelName, '　') !== false || strpos($channelName, ' ') !== false) {
             return \Redirect::back()->withErrors(['Don\'t put spaces between words']);
         }
@@ -77,7 +75,11 @@ class YoutubeChannelController extends Controller
         return 0;
     }
 
-    public function getApiData($videoID) {
+    /**
+     * @param int youtubeVideoId
+     * @return array<string, string>
+     */
+    public function getApiData(int $videoID): array {
         if (!isset(YoutubeApi::first()->key)) {
             return "APIが設定されていません。";
         }
@@ -89,15 +91,10 @@ class YoutubeChannelController extends Controller
         curl_setopt($curl, CURLOPT_HEADER, false);
         $data = curl_exec($curl);
         curl_close($curl);
-
         $data2 = json_decode($data, true);
-
         $items = $data2['items'][0]["snippet"];
-
         $dataArray = [];
-
         array_push($dataArray, $items["channelTitle"], $items["title"]);
-
         return $dataArray;
     }
 
