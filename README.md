@@ -7,7 +7,9 @@ if it is 1, disabling word block.
 
 
 
-### Word
+### ・Word
+
+#### warging:
 when registering "word",don't contain spaces in string.
 
 you need to remove spaces and concatenate strings.
@@ -16,7 +18,9 @@ you need to remove spaces and concatenate strings.
 one piece -> onepiece <br />
 one ok rock -> oneokrock
 
-### YoutubeChannel
+### ・YoutubeChannel
+
+### ・Site
 
 # Todo after cloning on local environment
 $ composer install
