@@ -11,7 +11,7 @@ if it is 1, disabling word block.
 
 #### **[Warging]**:
 when registering "word",don't contain spaces in string.
-you need to remove spaces and concatenate strings.
+you need to remove spaces and concatenate strings.<br />
 (ex)<br />
 one piece -> onepiece <br />
 one ok rock -> oneokrock
