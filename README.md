@@ -21,13 +21,15 @@ Due to the program, it needs to be done as above.
 
 ### ・YoutubeChannel
 
-You can block a video of a registered channel.<br />
+You can block videos of registered channels.<br />
 Also, if the title of a video contain registered words, redirect the page.
 
 #### **[Caution]**:
 In order to use this function, you need to get YoutubeAPI, and register it on this system.
 
 ### ・Site
+You can block sites that contain registered url.
+
 
 # Todo after cloning on local environment
 $ composer install
