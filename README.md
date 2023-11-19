@@ -1,8 +1,11 @@
+[TL;DR]
+You can block "Site", "Word" and "YoutubeChannel" by registering them on server and use chrome-extension.
+
+
 if it is 1, disabling word block.
 "The disableFlg column in all records of 'Word' table will be reset to 0 every day at 00:00.(using crontab)
 
 
-You can block "Site", "Word" and "YoutubeChannel" by registering them in this system.
 
 ### Word
 when registering "word",don't contain spaces in string.
