@@ -94,11 +94,13 @@ class BlockTarget {
         Storage::delete('public/txt' . $newTxtFileName);
     }
 
-    public function download($model, $path) {
+    public function download($model, $path, $number) {
+        $flg = null;
         $fileName = $model . '.txt';
         $authenticated_user = Auth::user();
         if ($model === "sites_for_hosts") {
             $model = "sites";
+            $flg = 1;
         }
         $name_lists = $authenticated_user->$model->pluck('genre', 'name');
         Log::debug($name_lists);
@@ -110,7 +112,7 @@ class BlockTarget {
                 fwrite($data, $genre);
                 fwrite($data, "\n");
             }
-        } elseif ($model === "sites_for_hosts") {
+        } elseif ($model === "sites" && $flg === 1) {
             foreach($name_lists as $name => $genre) {
                 fwrite($data, "127.0.0.1 www.");
                 fwrite($data, $name);
