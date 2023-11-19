@@ -1,9 +1,5 @@
-Blockwordの中の　ワード最大、3つまでを　25m　　見れる　ようにする（その日に限る）
-一日2回まで　その操作が可能。
-
-ようなプログラムを作成する
 if it is 1, disabling word block.
-"The disableFlg column in all records of 'Word' table will be reset to 0 every day at 00:00.(crontab)
+"The disableFlg column in all records of 'Word' table will be reset to 0 every day at 00:00.(using crontab)
 
 
 You can block "Site", "Word" and "YoutubeChannel" by registering them in this system.
@@ -53,7 +49,7 @@ run the below cmd
 php artisan queue:table
 =========================
 
-# crantab -e に記載すること
+# crantab -e setting
 0 15 * * * cd /var/www/html/example-app && php artisan limit:daily >> /dev/null 2>&1
 
 queueを使用してyoutubechannelblockのblock メソッド内で　

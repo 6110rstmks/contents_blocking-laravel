@@ -33,7 +33,6 @@ class DisableProcess implements ShouldQueue
         // $user = User::where('id', 1)->first();
         $abc = $this->word;
         $abc->disableFlg = 0;
-        Log::debug($abc->name);
         $abc->save();
     }
 }

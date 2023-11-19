@@ -12,8 +12,6 @@ use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
 use App\Jobs\DisableProcess;
 
-
-
 class WordController extends Controller
 {
     protected $blockTarget;
@@ -22,10 +20,6 @@ class WordController extends Controller
         $this->blockTarget = $blockTarget;
     }
 
-    // 開発環境のテスト用ページを返すメソッド。
-    public function testBlock() {
-        return view('test-page');
-    }
 
     public function list() {
         $authenticated_user = Auth::user();
@@ -83,6 +77,8 @@ class WordController extends Controller
     public function block(Request $request) {
         $nowTime = Carbon::now();
         $user = User::find(1);
+
+        // if user is not still registered, prevent error
         if (is_null($user)) {
             return;
         }
@@ -120,6 +116,7 @@ class WordController extends Controller
         }
     }
 
+    // unblock word of genre 1
     public function unblock(Word $word) {
         DisableProcess::dispatch($word)->delay(now()->addMinutes(15));
         $word->disableFlg = 1;
@@ -128,6 +125,7 @@ class WordController extends Controller
     }
 
     // release blocking of 'genre 2' words for thirty minutes
+    // 廃止した機能
     public function temporaryUnblock(Word $word) {
         if (User::find(1)->dayLimit === 1) {
             return \Redirect::back()->withErrors(['You have reached the limit of unblock attempts for today.']);
