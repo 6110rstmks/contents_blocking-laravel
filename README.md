@@ -9,16 +9,15 @@ if it is 1, disabling word block.
 
 ### ・Word
 
-#### warging:
+#### **[Warging]**:
 when registering "word",don't contain spaces in string.
-
 you need to remove spaces and concatenate strings.
-
-(ex)
+(ex)<br />
 one piece -> onepiece <br />
 one ok rock -> oneokrock
 
 ### ・YoutubeChannel
+#### **[Caution]**:
 
 ### ・Site
 
