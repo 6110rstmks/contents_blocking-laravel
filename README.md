@@ -33,11 +33,13 @@ You can block sites that contain registered url.
 ### Functions common to the three above
 - download(export) registered data by text file
 - import text file.
-```word.txt
+```
+*word.txt
 アニメ, 2
 漫画, 2
 ドラマ, 2
 ```
+
 
 
 
