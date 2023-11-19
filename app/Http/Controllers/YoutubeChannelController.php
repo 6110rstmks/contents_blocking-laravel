@@ -78,9 +78,10 @@ class YoutubeChannelController extends Controller
     }
 
     public function getApiData($videoID) {
-        if (is_null($API_KEY = YoutubeApi::first()->key)) {
+        if (is_null(YoutubeApi::first()->key)) {
             return "APIが設定されていません。";
         }
+        $API_KEY =  YoutubeApi::first()->key;
         $url = "https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" . $videoID . "&key=" . $API_KEY;
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
