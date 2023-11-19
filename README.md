@@ -21,7 +21,7 @@ Due to the program, it needs to be done as above.
 
 ### ・YoutubeChannel
 
-You can block a video of a registered channel.
+You can block a video of a registered channel.<br />
 Also, if the title of a video contain registered words, redirect the page.
 
 #### **[Caution]**:
