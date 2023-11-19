@@ -83,7 +83,9 @@ class WordController extends Controller
     public function block(Request $request) {
         $nowTime = Carbon::now();
         $user = User::find(1);
-        Log::debug($user);
+        if (is_null($user)) {
+            return;
+        }
         $this->timeComparison($nowTime, $user);
 
         $words_in_db = Word::all()->where('disableFlg', 0)->pluck("name");
