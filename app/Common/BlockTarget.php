@@ -103,7 +103,6 @@ class BlockTarget {
             $flg = 1;
         }
         $name_lists = $authenticated_user->$model->pluck('genre', 'name');
-        Log::debug($name_lists);
         $data = fopen($path, "w");
         if ($model === "words") {
             foreach($name_lists as $name => $genre) {
