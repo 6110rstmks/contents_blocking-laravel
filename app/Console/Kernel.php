@@ -17,7 +17,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('limit:daily')->everyMinute();
-        $schedule->command('inset:youtube-dot-com   ')->everyMinute();
+        $schedule->command('inset:youtube-dot-com')->everyMinute();
     }
 
     /**
