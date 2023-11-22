@@ -9,12 +9,14 @@ class Kernel extends ConsoleKernel
 {
     protected $commands = [
         Commands\LimitRelease::class,
+        Commands\InsertYoutubeDotCom::class,
     ];
     /**
      * Define the application's command schedule.
      */
     protected function schedule(Schedule $schedule): void
     {
+        $schedule->command('limit:daily')->everyMinute();
         $schedule->command('limit:daily')->everyMinute();
     }
 

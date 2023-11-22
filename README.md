@@ -83,7 +83,12 @@ queueを使用してyoutubechannelblockのblock メソッド内で　
 
 ## Functional Requirement I want to implement
 
-white listとblacklist モードを切り替えれるようにする
+- white listとblacklist モードを切り替えれるようにする
+
+- from 日本時間9PM until 4AM, block youtube.com
+
+how to implement 
+1. insert youtube.com row to table and delete youtube.com 
 
 
 
