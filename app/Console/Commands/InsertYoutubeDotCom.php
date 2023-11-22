@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\YoutubeChannel;
+use Log;
 
 class InsertYoutubeDotCom extends Command
 {
@@ -26,6 +27,7 @@ class InsertYoutubeDotCom extends Command
      */
     public function handle()
     {
+        Log::debug("unnko");
         $channel = new YoutubeChannel;
         $channel->name = 'youtube.com';
         $channel->save();
