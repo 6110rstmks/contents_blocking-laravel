@@ -57,6 +57,9 @@ class YoutubeChannelController extends Controller
         $videoID = $request->input('videoid');
 
         $apiData = $this->getApiData($videoID);
+        if ($apiData == 1) {
+            return;
+        }
         [$channelName, $title] = $apiData;
         $words_in_db = Word::all()->where('disableFlg', 0)->pluck("name");
         $title = preg_replace('/　/u', '', $title);  // delete multibyte space
@@ -81,7 +84,7 @@ class YoutubeChannelController extends Controller
      */
     public function getApiData(string $videoID): array {
         if (!isset(YoutubeApi::first()->key)) {
-            return "APIが設定されていません。";
+            return 1;
         }
         $API_KEY =  YoutubeApi::first()->key;
         $url = "https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" . $videoID . "&key=" . $API_KEY;
