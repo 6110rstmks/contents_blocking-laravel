@@ -24,9 +24,7 @@ class YoutubeChannelController extends Controller
     }
 
     public function list() {
-
         $lists = $this->blockTarget->getModel("youtube_channels");
-
         $cnt = $this->blockTarget->getCnt("youtube_channels");
         $return_file = 'youtube-list';
         return view($return_file)

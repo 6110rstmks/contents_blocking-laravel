@@ -7,15 +7,14 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Word;
 
 class BlockTarget {
-
-    public function getModel($model) {
+    public function getModel(string $model): array {
         $authenticated_user = Auth::user();
         // $lists = $authenticated_user->youtube_channels;
         $lists = $authenticated_user->$model;
         return $lists;
     }
 
-    public function getCnt($model) {
+    public function getCnt(string $model): int {
         $authenticated_user = Auth::user();
         $cnt = $authenticated_user->$model->count();
         return $cnt;
