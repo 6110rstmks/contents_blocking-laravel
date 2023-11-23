@@ -76,10 +76,10 @@ class YoutubeChannelController extends Controller
     }
 
     /**
-     * @param int youtubeVideoId
+     * @param string youtubeVideoId
      * @return array<string, string>
      */
-    public function getApiData(int $videoID): array {
+    public function getApiData(string $videoID): array {
         if (!isset(YoutubeApi::first()->key)) {
             return "APIが設定されていません。";
         }
