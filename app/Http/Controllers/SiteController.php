@@ -40,6 +40,11 @@ class SiteController extends Controller
 
         if (strpos($blockSite, '　') !== false || strpos($blockSite, ' ') !== false) {
             return \Redirect::back()->withErrors(['Don\'t put spaces between words']);
+
+        }
+
+        if (strpos($blockSite, '/') !== false || strpos($blockSite, '@') !== false) {
+            return \Redirect::back()->withErrors(["Don't contain \"@\" or \"/\";"]);
         }
 
         $siteModel = new Site();
