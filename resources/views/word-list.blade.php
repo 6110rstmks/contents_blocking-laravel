@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+<button class="btn">clickひょうじ</button>
 
 <div style="font-size: 24px;">Left Time for disabling BlockingWord:<span style="color: red">{{$diffTime}}</span></div>
 @if ($errors->any())
@@ -11,13 +12,12 @@
     </ul>
     </div>
     @endif
-<div style="display: flex; margin-top: 100px">
-
+<div class="top" style="display: flex; margin-top: 100px; visibility: hidden;">
     <section class="second" style="flex: 50%">
     <div>解除可(右はid)</div>
         @foreach ($lists2 as $name)
         <div style="display:flex; font-size: 25px">
-            <div>{{$name->name}}</div>
+            <div class="block-word">{{$name->name}}</div>
             <div style="margin-left: 50px">{{ $name->id }}</div>
             <!-- @if ($name->disableFlg === 0)
                 <form action="{{route('word-temporary-unblock', $name)}}" style="margin-left: 15px" method="POST">
@@ -48,7 +48,6 @@
     </section>
 </div>
 
-
 <section class="first" style="font-size: 40px; margin-top: 100px; border: 1px green solid">
     <span>You can't disable </span>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
@@ -72,4 +71,11 @@ const myFunction = () => {
     x.style.display = "block";
   }
 }
+
+let y = document.querySelector(".top")
+let btn = document.querySelector(".btn")
+
+btn.addEventListener("click", () => {
+    y.style.visibility = "visible"
+})
 </script>

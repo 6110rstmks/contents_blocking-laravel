@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use App\Common\BlockTarget;
 use App\Models\Site;
 use Illuminate\Support\Facades\Auth;
-
-
 use Log;
 
 class SiteController extends Controller
@@ -58,9 +56,7 @@ class SiteController extends Controller
     public function block(Request $request) {
         $url = $request->input('title');
         $url = preg_replace( "#^[^:/.]*[:/]+#i", "", $url );
-
         $urls_in_db = Site::all()->pluck("name");
-
         foreach ($urls_in_db as $data) {
             if (strpos($url, $data) != false || strpos($url, $data) === 0) {
                 return 1;

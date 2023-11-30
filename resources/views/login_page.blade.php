@@ -14,10 +14,8 @@
         <button>submit</button>
     </form>
 
-    @if (auth()->check())
-        {{Auth::user()->email;}}
-    @else
-        <div>mada</div>
+    @if (!auth()->check())
+    <div>mada</div>
     @endif
 
 
