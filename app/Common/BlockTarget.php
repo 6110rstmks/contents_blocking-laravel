@@ -7,9 +7,12 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Word;
 
 class BlockTarget {
-    public function getModel(string $model): array {
+    /**
+     * @param string
+     * @return Collection
+     */
+    public function getModel(string $model) {
         $authenticated_user = Auth::user();
-        // $lists = $authenticated_user->youtube_channels;
         $lists = $authenticated_user->$model;
         return $lists;
     }
