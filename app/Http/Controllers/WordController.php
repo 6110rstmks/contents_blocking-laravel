@@ -20,23 +20,18 @@ class WordController extends Controller
         $this->blockTarget = $blockTarget;
     }
 
-
     public function list() {
         $authenticated_user = Auth::user();
-
         $words = $authenticated_user->words;
-
         $lists1 = $words->where('genre', 1);
         $lists2 = $words->where('genre', 2);
         $lists3 = $words->where('genre', 3);
         $cnt = $this->blockTarget->getCnt("words");
         $nowTime = Carbon::now();
         $endTime = $authenticated_user->timeLimit;
-
         $this->timeComparison($nowTime, $authenticated_user);
-
         $interval = $nowTime->diffAsCarbonInterval($endTime, false);
-
+        
         if ($interval->invert == 0) {
         } else {
             $interval = null;
