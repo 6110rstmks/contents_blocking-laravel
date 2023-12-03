@@ -29,27 +29,20 @@ class SiteController extends Controller
 
     public function register(Request $request) {
         $auth_user = Auth::user();
-
         $request->validate([
             'name' => 'required|unique:sites'
         ]);
-
         $blockSite = ltrim($request->name);
-
         if (strpos($blockSite, '　') !== false || strpos($blockSite, ' ') !== false) {
-            return \Redirect::back()->withErrors(['Don\'t put spaces between words']);
-
+            return \Redirect::back()->withErrors(['Don\'t put spaces between words.']);
         }
-
         if (strpos($blockSite, '/') !== false || strpos($blockSite, '@') !== false) {
-            return \Redirect::back()->withErrors(["Don't contain \"@\" or \"/\";"]);
+            return \Redirect::back()->withErrors(["Don't contain \"@\" or \"/\"."]);
         }
-
         $siteModel = new Site();
         $siteModel->name = $blockSite;
         $siteModel->save();
         $auth_user->sites()->syncWithoutDetaching($siteModel->id);
-
         return redirect()->route('register-page');
     }
 

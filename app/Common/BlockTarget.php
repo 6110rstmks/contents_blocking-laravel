@@ -29,11 +29,9 @@ class BlockTarget {
         ], [
             'name.unique' => 'This channel_name is already registered.'
         ]);
-
         YoutubeChannel::create([
            'name' => $request->channel_name
         ]);
-
         return redirect()->route('register-page');
     }
 
