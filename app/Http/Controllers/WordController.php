@@ -76,8 +76,7 @@ class WordController extends Controller
 
     public function block(Request $request) {
         $nowTime = Carbon::now();
-        $user = User::find(1);
-
+        $user = User::firs();
         // if user is not still registered, prevent error
         if (is_null($user)) {
             return;
