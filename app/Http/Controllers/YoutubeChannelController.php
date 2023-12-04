@@ -53,7 +53,6 @@ class YoutubeChannelController extends Controller
 
     public function block(Request $request) {
         $videoID = $request->input('videoid');
-
         $apiData = $this->getApiData($videoID);
         if ($apiData == 1) {
             return;
@@ -80,7 +79,7 @@ class YoutubeChannelController extends Controller
      * @param string youtubeVideoId
      * @return array<string, string>
      */
-    public function getApiData(string $videoID): array {
+    public function getApiData($videoID): array {
         if (!isset(YoutubeApi::first()->key)) {
             return 1;
         }
