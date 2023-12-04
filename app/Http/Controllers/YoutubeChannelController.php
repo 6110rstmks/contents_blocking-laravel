@@ -79,7 +79,7 @@ class YoutubeChannelController extends Controller
      * @param string youtubeVideoId
      * @return array<string, string>
      */
-    public function getApiData($videoID): array {
+    public function getApiData($videoID) {
         if (!isset(YoutubeApi::first()->key)) {
             return 1;
         }
