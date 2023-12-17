@@ -21,6 +21,7 @@
             @foreach($lists as $list)
             <div style="display:flex; font-size: 25px">
                 <div>{{$list->name}}</div>
+                <div>      </div>
                 <div>   {{$list->id}}</div>
             </div>
             @endforeach
