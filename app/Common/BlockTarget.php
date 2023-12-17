@@ -37,27 +37,14 @@ class BlockTarget {
 
     public function import($model, $request) {
         $authenticated_user = Auth::user();
+        fileValidation($request);
 
-        if ($request->hasFile('txtFile')) {
-            // check if the extension of file is txt
-            if ($request->txtFile->getClientOriginalExtension() !== "txt") {
-            return \Redirect::back()->withErrors(['不適切な拡張子です。']);
-
-            }
-            //ファイルの保存
-            $newTxtFileName = $request->file('txtFile')->getClientOriginalName();
-            $request->file('txtFile')->storeAs('public/txt', $newTxtFileName);
-        } else {
-            return \Redirect::back()->withErrors(['txtファイルの取得に失敗しました。']);
-        }
-
+        //ファイルの保存
+        $newTxtFileName = $request->file('txtFile')->getClientOriginalName();
+        $request->file('txtFile')->storeAs('public/txt', $newTxtFileName);
         $txtFile = Storage::disk('local')->get("public/txt/{$newTxtFileName}");
-
-        // $txtを元に行単位のコレクション作成。explodeで改行ごとに分解
+        // $txtファイルの中身からコレクション作成。explodeで改行ごとに分解
         $uploadedData = collect(explode("\n", $txtFile));
-
-        Log::debug($uploadedData);
-
         if ($model === "words") {
             foreach ($uploadedData as $row) {
                 $NameGenreArray = explode(', ', $row);
@@ -92,6 +79,17 @@ class BlockTarget {
             }
         }
         Storage::delete('public/txt' . $newTxtFileName);
+    }
+
+    public function fileValidation($request) {
+        if ($request->hasFile('txtFile')) {
+            // check if the extension of file is txt
+            if ($request->txtFile->getClientOriginalExtension() !== "txt") {
+                return \Redirect::back()->withErrors(['the extension of file must be .txt']);
+            }
+        } else {
+            return \Redirect::back()->withErrors(['choose a imported file at above btn.']);
+        }
     }
 
     public function download($model, $path) {
