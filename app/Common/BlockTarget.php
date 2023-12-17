@@ -56,6 +56,8 @@ class BlockTarget {
         // $txtを元に行単位のコレクション作成。explodeで改行ごとに分解
         $uploadedData = collect(explode("\n", $txtFile));
 
+        Log::debug($uploadedData);
+
         if ($model === "words") {
             foreach ($uploadedData as $row) {
                 $NameGenreArray = explode(', ', $row);
@@ -70,25 +72,23 @@ class BlockTarget {
             }
 
         } else {
+            $modifiedModel = ucfirst(substr($model, 0, -1)); //ex)sites -> Site
+            //ex)Youtube_channel -> YoutubeChannel
+            if (strpos($modifiedModel, '_') !== false) {
+                $underscorePos = strpos($modifiedModel, '_');
+                $modifiedModel = substr_replace($modifiedModel, strtoupper($modifiedModel[$underscorePos + 1]), $underscorePos + 1, 1);
+                $modifiedModel = str_replace('_', '', $modifiedModel);
+            }
+            $modifiedModel = "App\Models\\" . $modifiedModel;
             foreach ($uploadedData as $row) {
+                str_replace("\r", "", $row);
                 if ($authenticated_user->$model->where('name', $row)->count() > 0 || empty($row)) {
                     continue;
                 }
-                $modifiedModel = ucfirst(substr($model, 0, -1)); //ex)sites -> Site
-                //ex)Youtube_channel -> YoutubeChannel
-                if (strpos($modifiedModel, '_') !== false) {
-                    $underscorePos = strpos($modifiedModel, '_');
-
-                    $modifiedModel = substr_replace($modifiedModel, strtoupper($modifiedModel[$underscorePos + 1]), $underscorePos + 1, 1);
-                    $modifiedModel = str_replace('_', '', $modifiedModel);
-                }
-                $modifiedModel = "App\Models\\" . $modifiedModel;
-
                 $ModelInstance = new $modifiedModel();
                 $ModelInstance->name = $row;
                 $ModelInstance->save();
                 $authenticated_user->$model()->syncWithoutDetaching($ModelInstance->id);
-
             }
         }
         Storage::delete('public/txt' . $newTxtFileName);

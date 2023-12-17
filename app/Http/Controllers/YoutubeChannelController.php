@@ -68,7 +68,6 @@ class YoutubeChannelController extends Controller
                 return $data;
             }
         }
-
         if (YoutubeChannel::where('name', $channelName)->count() > 0) {
             return $channelName;
         }
