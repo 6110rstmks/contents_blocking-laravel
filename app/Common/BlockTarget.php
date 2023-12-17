@@ -37,7 +37,7 @@ class BlockTarget {
 
     public function import($model, $request) {
         $authenticated_user = Auth::user();
-        fileValidation($request);
+        $this->fileValidation($request);
 
         //ファイルの保存
         $newTxtFileName = $request->file('txtFile')->getClientOriginalName();
