@@ -92,7 +92,7 @@ class YoutubeChannelController extends Controller
         $data = curl_exec($curl);
         curl_close($curl);
         $data2 = json_decode($data, true);
-        $items = $data2['items'][0]["snippet"];
+        $items = $data2['items']['0']["snippet"];
         $dataArray = [];
         array_push($dataArray, $items["channelTitle"], $items["title"]);
         return $dataArray;

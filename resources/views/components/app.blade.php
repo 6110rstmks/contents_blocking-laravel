@@ -20,9 +20,10 @@
         <div style="font-size: 45px">***{{$cnt}}***</div>
         @if ($filename === "word")
         @else
-            @foreach($lists as $name)
+            @foreach($lists as $list)
             <div style="display:flex; font-size: 25px">
-                <div>{{$name->name}}</div>
+                <div>{{$list->name}}</div>
+                <div>{{$list->id}}</div>
             </div>
             @endforeach
         @endif
