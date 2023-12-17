@@ -81,7 +81,7 @@ class BlockTarget {
             }
             $modifiedModel = "App\Models\\" . $modifiedModel;
             foreach ($uploadedData as $row) {
-                str_replace("\r", "", $row);
+                $row = str_replace("\r", "", $row);
                 if ($authenticated_user->$model->where('name', $row)->count() > 0 || empty($row)) {
                     continue;
                 }
