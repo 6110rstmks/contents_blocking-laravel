@@ -11,6 +11,7 @@ use Log;
 use Illuminate\Support\Facades\Input;
 use Carbon\Carbon;
 use App\Jobs\DisableProcess;
+use App\Http\Requests\CreateWordFormRequest;
 
 class WordController extends Controller
 {
@@ -31,9 +32,8 @@ class WordController extends Controller
         $endTime = $authenticated_user->timeLimit;
         $this->timeComparison($nowTime, $authenticated_user);
         $interval = $nowTime->diffAsCarbonInterval($endTime, false);
-        
-        if ($interval->invert == 0) {
-        } else {
+
+        if ($interval->invert != 0) {
             $interval = null;
         }
 
@@ -47,42 +47,34 @@ class WordController extends Controller
             ]);
     }
 
-    public function register(Request $request) {
+    public function register(CreateWordFormRequest $request) {
         $auth_user = Auth::user();
-
-        $request->validate([
-            'name' => 'required|unique:words',
-            'genre'=> 'required'
-        ]);
-
         $blockWord = ltrim($request->name);
-
         if (strpos($blockWord, '　') !== false || strpos($blockWord, ' ') !== false) {
             return \Redirect::back()->withErrors(['Don\'t put spaces between words']);
         }
         $number = $request->genre;
-        $word = new Word();
-        $word->name = $blockWord;
-        $word->genre = $number;
-        $word->save();
+        // $word = new Word();
+        // $word->name = $blockWord;
+        // $word->genre = $number;
+        // $word->save();
+        $word = Word::create($request->validated());
         $auth_user->words()->syncWithoutDetaching($word->id);
         return redirect()->route('register-page');
     }
 
     public function block(Request $request) {
-        $nowTime = Carbon::now();
-        $user = User::first();
-        // if user is not still registered, prevent error
-        if (is_null($user)) {
+        $now_time = Carbon::now();
+        $first_user = User::first();
+
+        if (is_null($first_user)) { // if user is not still registered, prevent error
             return;
         }
-        $this->timeComparison($nowTime, $user);
-
+        // $this->timeComparison($nowTime, $user);
         $words_in_db = Word::all()->where('disableFlg', 0)->pluck("name");
         $title = $request->input('title');
         $title = preg_replace('/　/u', '', $title);  // delete multibyte space
         $title = str_replace(' ', '', $title); // delete singlebyte space
-
         // stripos() is case-insensitive version of strpos()
         foreach ($words_in_db as $data) {
             if (stripos($title, $data) != false || stripos($title, $data) === 0) {
@@ -91,6 +83,30 @@ class WordController extends Controller
         }
         return 0;
     }
+
+    // public function containsHiraganaAndKatakana($str) {
+    //     // ひらがなまたはカタカナを含む正規表現
+    //     $pattern = '/[\p{Hiragana}\p{Katakana}]+/u';
+
+    //     // 正規表現にマッチするかどうかを確認
+    //     return preg_match($pattern, $str) === 1;
+    // }
+
+    // public function isHiragana($str) {
+    //     // ひらがなのみを含む正規表現
+    //     $pattern = '/^[\p{Hiragana}\s]+$/u';
+
+    //     // 正規表現にマッチするかどうかを確認
+    //     return preg_match($pattern, $str) === 1;
+    // }
+
+    // public function isKatakana($str) {
+    //     // カタカナのみを含む正規表現
+    //     $pattern = '/^[\p{Katakana}\s]+$/u';
+
+    //     // 正規表現にマッチするかどうかを確認
+    //     return preg_match($pattern, $str) === 1;
+    // }
 
     public function timeComparison($nowTime, $user) {
         if (is_null($user->timeLimit)) {
@@ -110,7 +126,7 @@ class WordController extends Controller
         }
     }
 
-    // unblock word of genre 1
+    // unblock word of genre 1 for ** minutes
     public function unblock(Word $word) {
         DisableProcess::dispatch($word)->delay(now()->addMinutes(15));
         $word->disableFlg = 1;
@@ -119,7 +135,7 @@ class WordController extends Controller
     }
 
     // release blocking of 'genre 2' words for thirty minutes
-    // 廃止した機能
+    // deprecated function
     public function temporaryUnblock(Word $word) {
         if (User::find(1)->dayLimit === 1) {
             return \Redirect::back()->withErrors(['You have reached the limit of unblock attempts for today.']);

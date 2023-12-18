@@ -23,5 +23,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/return_youtube', [YoutubeChannelController::class, 'block']);
 Route::post('/return_word', [WordController::class, 'block']);
+Route::post('/return_search_word', [WordController::class, 'searchBlock']);
 Route::post('/return_site', [SiteController::class, 'block']);
 
