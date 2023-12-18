@@ -19,7 +19,7 @@ Due to the program, it needs to be done as above.
 ### ・YoutubeChannel
 
 You can block videos of registered channels.<br />
-Also, if the title of a video contain registered words, redirect the page.
+Also, if the title of a video contains wordsregistered in DB, redirect the page.
 
 #### **[Caution]**:
 In order to use this function, you need to get YoutubeAPI, and register it on this system.
@@ -90,7 +90,9 @@ queueを使用してyoutubechannelblockのblock メソッド内で　
 how to implement 
 1. insert youtube.com row to table and delete youtube.com 
 
-
+## Improving code readvility
+1. mass assignment ($request->validated())
+2. eager loading
 
 
 
