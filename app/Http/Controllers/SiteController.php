@@ -50,8 +50,11 @@ class SiteController extends Controller
         $url = $request->input('title');
         $url = preg_replace( "#^[^:/.]*[:/]+#i", "", $url );
         $urls_in_db = Site::all()->pluck("name");
-        $whiteListFlg = $this->whiteListCheck($url);
-        if ($whiteListFlg == 0) {
+        // $whiteListFlg = $this->whiteListCheck($url);
+        // if ($whiteListFlg == 0) {
+        //     return 0;
+        // }
+        if ($this->whiteListCheck($url)) {
             return 0;
         }
         foreach ($urls_in_db as $data) {
@@ -65,7 +68,7 @@ class SiteController extends Controller
     public function whiteListCheck($url) {
         $whiteList = ["detail.chiebukuro.yahoo.co.jp"];
         if (in_array($url, $whiteList)) {
-            return 0;
+            return true;
         }
     }
 
