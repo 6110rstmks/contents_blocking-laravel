@@ -92,8 +92,8 @@ class BlockTarget {
         }
     }
 
-    public function export($model, $path) {
-        $flg = null;
+    public function export($model, $path, $flg = null) {
+        // $flg = null;
         if ($model === "sites_for_hosts") {
             $model = "sites";
             $flg = 1;
@@ -104,7 +104,7 @@ class BlockTarget {
         return $model . '.txt';
     }
 
-    //
+    // ファイルに書き込む
     public function writingFile($model, $flg, $data) {
         $name_lists = Auth::user()->$model->pluck('genre', 'name');
         if ($model === "words") {
