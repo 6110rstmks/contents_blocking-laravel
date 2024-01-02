@@ -83,7 +83,7 @@ class SiteController extends Controller
 
     public function export_for_hostsfile() {
         $path = public_path('/storage/dummy.txt');
-        $fileName = $this->blockTarget->export("sites_for_hosts", $path);
+        $fileName = $this->blockTarget->export("sites_for_hosts", $path, 1);
         return response()->download($path, $fileName, ['Content-Type: text/plain']);
     }
 }
