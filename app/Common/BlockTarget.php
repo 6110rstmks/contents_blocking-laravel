@@ -8,7 +8,7 @@ use App\Models\Word;
 
 class BlockTarget {
     /**
-     * @param string
+     * @param string $model
      * @return Collection
      */
     public function getModel(string $model) {
@@ -93,11 +93,6 @@ class BlockTarget {
     }
 
     public function export($model, $path, $flg = null) {
-        // $flg = null;
-        if ($model === "sites_for_hosts") {
-            $model = "sites";
-            $flg = 1;
-        }
         $data = fopen($path, "w");
         $this->writingFile($model, $flg, $data);
         fclose($data);

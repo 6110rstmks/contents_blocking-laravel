@@ -53,7 +53,6 @@ class WordController extends Controller
         if (strpos($blockWord, '　') !== false || strpos($blockWord, ' ') !== false) {
             return \Redirect::back()->withErrors(['Don\'t put spaces between words']);
         }
-        // $number = $request->genre;
         $word = Word::create($request->validated());
         $auth_user->words()->syncWithoutDetaching($word->id);
         return redirect()->route('register-page');
