@@ -97,10 +97,9 @@ class BlockTarget {
         $this->writingFile($model, $flg, $data);
         fclose($data);
         if ($flg == 1) {
-            return "sites_for_file.txt";
-        } else {
-            return $model . '.txt';
+            $model = "sites";
         }
+        return $model . '.txt';
     }
 
     // write blocking data in file
