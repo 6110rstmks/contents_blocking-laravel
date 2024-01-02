@@ -94,19 +94,19 @@ class BlockTarget {
 
     public function export($model, $path) {
         $flg = null;
-        $fileName = $model . '.txt';
         if ($model === "sites_for_hosts") {
             $model = "sites";
             $flg = 1;
         }
-        $name_lists = Auth::user()->$model->pluck('genre', 'name');
         $data = fopen($path, "w");
-        $this->writingFile($model, $name_lists, $flg, $data);
+        $this->writingFile($model, $flg, $data);
         fclose($data);
-        return $fileName;
+        return $model . '.txt';
     }
 
-    public function writingFile($model, $name_lists, $flg, $data) {
+    //
+    public function writingFile($model, $flg, $data) {
+        $name_lists = Auth::user()->$model->pluck('genre', 'name');
         if ($model === "words") {
             foreach($name_lists as $name => $genre) {
                 fwrite($data, $name);
