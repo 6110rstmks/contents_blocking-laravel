@@ -99,14 +99,14 @@ class BlockTarget {
             $model = "sites";
             $flg = 1;
         }
-        $authenticated_user = Auth::user();
-        $name_lists = $authenticated_user->$model->pluck('genre', 'name');
-        $this->writingFile($model, $path, $flg);
+        $name_lists = Auth::user()->$model->pluck('genre', 'name');
+        $data = fopen($path, "w");
+        $this->writingFile($model, $name_lists, $flg);
+        fclose($data);
         return $fileName;
     }
 
-    public function writingFile($model, $path, $flg) {
-        $data = fopen($path, "w");
+    public function writingFile($model, $name_lists, $flg) {
         if ($model === "words") {
             foreach($name_lists as $name => $genre) {
                 fwrite($data, $name);
@@ -131,6 +131,5 @@ class BlockTarget {
                 fwrite($data, "\n");
             }
         }
-        fclose($data);
     }
 }
