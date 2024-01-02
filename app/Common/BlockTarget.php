@@ -93,9 +93,6 @@ class BlockTarget {
     }
 
     public function export($model, $path, $flg = null) {
-        if ($flg == 1) {
-            $model = "sites";
-        }
         $data = fopen($path, "w");
         $this->writingFile($model, $flg, $data);
         fclose($data);
@@ -104,6 +101,9 @@ class BlockTarget {
 
     // write blocking data in file
     public function writingFile($model, $flg, $data) {
+        if ($flg == 1) {
+            $model = "sites";
+        }
         $name_lists = Auth::user()->$model->pluck('genre', 'name');
         if ($model === "words") {
             foreach($name_lists as $name => $genre) {
