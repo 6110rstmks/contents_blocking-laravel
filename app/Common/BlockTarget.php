@@ -92,15 +92,20 @@ class BlockTarget {
         }
     }
 
-    public function download($model, $path) {
+    public function export($model, $path) {
         $flg = null;
         $fileName = $model . '.txt';
-        $authenticated_user = Auth::user();
         if ($model === "sites_for_hosts") {
             $model = "sites";
             $flg = 1;
         }
+        $authenticated_user = Auth::user();
         $name_lists = $authenticated_user->$model->pluck('genre', 'name');
+        $this->writingFile($model, $path);
+        return $fileName;
+    }
+
+    public function writingFile($model, $path) {
         $data = fopen($path, "w");
         if ($model === "words") {
             foreach($name_lists as $name => $genre) {
@@ -127,6 +132,5 @@ class BlockTarget {
             }
         }
         fclose($data);
-        return $fileName;
     }
 }

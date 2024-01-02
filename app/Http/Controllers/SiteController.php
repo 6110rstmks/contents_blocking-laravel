@@ -7,6 +7,7 @@ use App\Common\BlockTarget;
 use App\Models\Site;
 use Illuminate\Support\Facades\Auth;
 use Log;
+use App\Http\Requests\CreateSiteFormRequest;
 
 class SiteController extends Controller
 {
@@ -29,9 +30,6 @@ class SiteController extends Controller
 
     public function register(Request $request) {
         $auth_user = Auth::user();
-        $request->validate([
-            'name' => 'required|unique:sites'
-        ]);
         $blockSite = ltrim($request->name);
         if (strpos($blockSite, '　') !== false || strpos($blockSite, ' ') !== false) {
             return \Redirect::back()->withErrors(['Don\'t put spaces between words.']);
@@ -77,15 +75,15 @@ class SiteController extends Controller
         return redirect()->back();
     }
 
-    public function download() {
+    public function export() {
         $path = public_path('/storage/dummy.txt');
-        $fileName = $this->blockTarget->download("sites", $path);
+        $fileName = $this->blockTarget->export("sites", $path);
         return response()->download($path, $fileName, ['Content-Type: text/plain']);
     }
 
-    public function download_for_hostsfile() {
+    public function export_for_hostsfile() {
         $path = public_path('/storage/dummy.txt');
-        $fileName = $this->blockTarget->download("sites_for_hosts", $path);
+        $fileName = $this->blockTarget->export("sites_for_hosts", $path);
         return response()->download($path, $fileName, ['Content-Type: text/plain']);
     }
 }

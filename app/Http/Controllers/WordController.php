@@ -160,9 +160,9 @@ class WordController extends Controller
         return redirect()->back();
     }
 
-    public function download() {
+    public function export() {
         $path = public_path('/storage/dummy.txt');
-        $fileName = $this->blockTarget->download("words", $path);
+        $fileName = $this->blockTarget->export("words", $path);
         return response()->download($path, $fileName, ['Content-Type: text/plain']);
     }
 }

@@ -102,9 +102,9 @@ class YoutubeChannelController extends Controller
         return redirect()->back();
     }
 
-    public function download() {
+    public function export() {
         $path = public_path('/storage/dummy.txt');
-        $fileName = $this->blockTarget->download("youtube_channels", $path);
+        $fileName = $this->blockTarget->export("youtube_channels", $path);
         return response()->download($path, $fileName, ['Content-Type: text/plain']);
     }
 }

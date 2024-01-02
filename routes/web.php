@@ -58,13 +58,13 @@ Route::group([
     Route::post('/register_api', [YoutubeApiController::class, 'register'])
     ->name('register-api');
 
-    Route::get('/youtube_download', [YoutubeChannelController::class, 'download'])
+    Route::get('/youtube_download', [YoutubeChannelController::class, 'export'])
         ->name('youtube-download');
-    Route::get('/word_download', [WordController::class, 'download'])
+    Route::get('/word_download', [WordController::class, 'export'])
         ->name('word-download');
-    Route::get('/site_download', [SiteController::class, 'download'])
+    Route::get('/site_download', [SiteController::class, 'export'])
         ->name('site-download');
-    Route::get('/site_for_hosts_download', [SiteController::class, 'download_for_hostsfile'])
+    Route::get('/site_for_hosts_download', [SiteController::class, 'export_for_hostsfile'])
         ->name('site_for_hosts-download');
 
     Route::post('/youtube-csv-import', [YoutubeChannelController::class, 'import'])
