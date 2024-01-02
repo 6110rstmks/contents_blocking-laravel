@@ -101,11 +101,11 @@ class BlockTarget {
         }
         $authenticated_user = Auth::user();
         $name_lists = $authenticated_user->$model->pluck('genre', 'name');
-        $this->writingFile($model, $path);
+        $this->writingFile($model, $path, $flg);
         return $fileName;
     }
 
-    public function writingFile($model, $path) {
+    public function writingFile($model, $path, $flg) {
         $data = fopen($path, "w");
         if ($model === "words") {
             foreach($name_lists as $name => $genre) {
