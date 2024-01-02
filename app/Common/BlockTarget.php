@@ -96,10 +96,14 @@ class BlockTarget {
         $data = fopen($path, "w");
         $this->writingFile($model, $flg, $data);
         fclose($data);
-        return $model . '.txt';
+        if ($flg == 1) {
+            return "sites_for_file.txt";
+        } else {
+            return $model . '.txt';
+        }
     }
 
-    // ファイルに書き込む
+    // write blocking data in file
     public function writingFile($model, $flg, $data) {
         $name_lists = Auth::user()->$model->pluck('genre', 'name');
         if ($model === "words") {
