@@ -93,12 +93,12 @@ class BlockTarget {
     }
 
     public function export($model, $path, $flg = null) {
-        $data = fopen($path, "w");
-        $this->writingFile($model, $flg, $data);
-        fclose($data);
         if ($flg == 1) {
             $model = "sites";
         }
+        $data = fopen($path, "w");
+        $this->writingFile($model, $flg, $data);
+        fclose($data);
         return $model . '.txt';
     }
 
