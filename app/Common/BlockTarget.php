@@ -104,7 +104,8 @@ class BlockTarget {
         if ($flg == 1) {
             $model = "sites";
         }
-        $name_lists = Auth::user()->$model()->orderBy('id', 'ASC')->get()->pluck('genre', 'name');
+        // $name_lists = Auth::user()->$model()->orderBy('id', 'ASC')->get()->pluck('genre', 'name');
+        $name_lists = Auth::user()->$model()->orderBy('id', 'ASC')->get();
         if ($model === "words") {
             foreach($name_lists as $name => $genre) {
                 fwrite($data, $name);
