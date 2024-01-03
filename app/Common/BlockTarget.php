@@ -106,6 +106,7 @@ class BlockTarget {
         }
         // $name_lists = Auth::user()->$model()->orderBy('id', 'ASC')->get()->pluck('genre', 'name');
         $name_lists = Auth::user()->$model()->orderBy('id', 'ASC')->get();
+        Log::debug($name_lists);
         if ($model === "words") {
             foreach($name_lists as $name => $genre) {
                 fwrite($data, $name);
