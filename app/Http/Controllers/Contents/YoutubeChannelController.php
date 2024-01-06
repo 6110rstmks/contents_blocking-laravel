@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Contents;
 
 use Illuminate\Http\Request;
 use App\Models\YoutubeChannel;
@@ -12,7 +12,6 @@ use Storage;
 use App\Common\BlockTarget;
 use Log;
 use Illuminate\Support\Facades\Auth;
-
 
 class YoutubeChannelController extends Controller
 {

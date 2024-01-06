@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Contents;
 
 use Illuminate\Http\Request;
 use App\Common\BlockTarget;

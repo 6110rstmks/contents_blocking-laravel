@@ -1,11 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\YoutubeChannelController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\WordController;
-use App\Http\Controllers\SiteController;
-use App\Http\Controllers\YoutubeApiController;
+// use App\Http\Controllers\Contents;
+use App\Http\Controllers\Contents\YoutubeChannelController;
+use App\Http\Controllers\Contents\UserController;
+use App\Http\Controllers\Contents\WordController;
+use App\Http\Controllers\Contents\SiteController;
+use App\Http\Controllers\Contents\YoutubeApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,10 +30,14 @@ Route::group([
         ->name('login');
 });
 
-
 Route::group([
-    'middleware' => 'auth:web'
+    'middleware' => 'auth:web',
+    'namespace' => 'App\Http\Controllers\Contents'
 ], function() {
+
+    Route::get('/questions_page', function() {
+        return view('questions/home');
+    })->name('question-page');
 
     Route::get('/youtube_list', [YoutubeChannelController::class, 'list'])
         ->name('Youtube-list');
@@ -77,11 +82,6 @@ Route::group([
 
     Route::post('/word_unblock/{word}', [WordController::class, 'unblock'])
         ->name('word-unblock');
-
-    Route::get('/dev-block-test-page', [WordController::class, 'testBlock']);
-
-    Route::post('/return_word', [YoutubeChannelController::class, 'block'])
-        ->name('ricepizza');
 
     Route::post('/register_user', [UserController::class, 'register'])
     ->name('register-user');

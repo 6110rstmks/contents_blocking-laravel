@@ -19,7 +19,7 @@
 </div>
 @endif
 
-<a style="font-size: 19px" href="{{ route('Youtube-list') }}">create Question</a>
+<a style="font-size: 19px" href="{{ route('question-page') }}">create Question</a>
 
 
 <div style="margin: 0 auto; width: 60%">
