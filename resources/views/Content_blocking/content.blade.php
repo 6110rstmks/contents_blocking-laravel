@@ -19,6 +19,9 @@
 </div>
 @endif
 
+<a style="font-size: 19px" href="{{ route('Youtube-list') }}">create Question</a>
+
+
 <div style="margin: 0 auto; width: 60%">
     <section class="youtube-channel">
         <div style="display:flex">

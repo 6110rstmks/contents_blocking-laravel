@@ -15,16 +15,12 @@ class UserController extends Controller
         // if (Auth::attempt($credentials))
         if (Auth::guard('web')->attempt($credentials, false))
         {
-
             // session hijacking countermeasure
             $request->session()->regenerate();
-            return redirect()->route('register-page');
-
+            return redirect()->route('content-page');
         } else {
             // 認証に失敗したら
             return back();
         }
-
-
     }
 }

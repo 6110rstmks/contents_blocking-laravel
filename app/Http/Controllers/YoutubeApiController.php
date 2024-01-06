@@ -17,6 +17,6 @@ class YoutubeApiController extends Controller
         $api->key = $request->name;
         $api->save();
 
-        return redirect()->route('register-page');
+        return redirect()->route('content-page');
     }
 }

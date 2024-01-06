@@ -20,7 +20,7 @@ class SiteController extends Controller
     public function list() {
         $lists = $this->blockTarget->getModel("sites");
         $cnt = $this->blockTarget->getCnt("sites");
-        return view('site-list')
+        return view('Content_blocking/site-list')
             ->with([
                 'lists' => $lists,
                 'cnt' => $cnt,

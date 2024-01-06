@@ -37,7 +37,7 @@ class WordController extends Controller
             $interval = null;
         }
 
-        return view('word-list')
+        return view('Content_blocking/word-list')
             ->with([
                 'lists1' => $lists1,
                 'lists2' => $lists2,
@@ -55,7 +55,7 @@ class WordController extends Controller
         }
         $word = Word::create($request->validated());
         $auth_user->words()->syncWithoutDetaching($word->id);
-        return redirect()->route('register-page');
+        return redirect()->route('content-page');
     }
 
     public function block(Request $request) {

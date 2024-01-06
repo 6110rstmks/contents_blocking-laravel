@@ -21,8 +21,6 @@ use App\Http\Controllers\YoutubeApiController;
 Route::group([
     'middleware' => 'guest:web'
 ], function() {
-
-
     Route::get('/', function() {
         return view('login_page');
     })->name('login_page');
@@ -45,9 +43,9 @@ Route::group([
     Route::get('/site_list', [SiteController::class, 'list'])
         ->name('Site-list');
 
-    Route::get('/register_page', function() {
-        return view('register');
-    })->name('register-page');
+    Route::get('/content_page', function() {
+        return view('Content_blocking/content');
+    })->name('content-page');
 
     Route::post('/register_youtube', [YoutubeChannelController::class, 'register'])
     ->name('register-youtube');
