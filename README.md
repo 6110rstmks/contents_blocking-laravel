@@ -14,6 +14,13 @@ you need to remove spaces and concatenate strings.<br />
 one piece -> onepiece <br />
 one ok rock -> oneokrock
 
+when a word contain Japanese "Hiragana" or "Katakana" and the length of the word is 4 character or more, it must be registered in "Katakana".
+
+(ex) 
+きたむら -> キタムラ
+なにわ男子 -> ナニワ男子
+ダイヤのA -> ダイヤノA
+
 Due to the program, it needs to be done as above.
 
 ### ・YoutubeChannel
@@ -68,7 +75,6 @@ $ php artisan migrate
     'password' => bcrypt('secret'),
 ]);
 
-
 ## 本番環境にデプロイ後
 
 run the below cmd
@@ -93,7 +99,3 @@ how to implement
 ## Improving code readvility
 1. mass assignment ($request->validated())
 2. eager loading
-
-
-
-

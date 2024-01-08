@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Log;
 
 class CreateWordFormRequest extends FormRequest
 {
@@ -26,4 +27,17 @@ class CreateWordFormRequest extends FormRequest
             'genre'=> 'required|numeric|between:1,3'
         ];
     }
+
+    // when validation is passed, ひらがなをかたかなに変換
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $validatedData = $this->validated();
+            $blockWord = $validatedData['name'];
+            if (strlen($blockWord) >= 4 && isHiragana($blockWord)) {
+                $this->merge(['name' => hiragana_to_katakana($blockWord)]);
+            }
+        });
+    }
+
 }
