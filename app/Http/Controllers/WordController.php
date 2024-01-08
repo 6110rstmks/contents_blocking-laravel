@@ -70,6 +70,8 @@ class WordController extends Controller
         $title = $request->input('title');
         $title = preg_replace('/　/u', '', $title);  // delete multibyte space
         $title = str_replace(' ', '', $title); // delete singlebyte space
+        $title = hiragana_to_katakana($title);
+        Log::debug($title);
         // stripos() is case-insensitive version of strpos()
         foreach ($words_in_db as $data) {
             if (stripos($title, $data) != false || stripos($title, $data) === 0) {
@@ -79,13 +81,22 @@ class WordController extends Controller
         return 0;
     }
 
-    // public function containsHiraganaAndKatakana($str) {
-    //     // ひらがなまたはカタカナを含む正規表現
-    //     $pattern = '/[\p{Hiragana}\p{Katakana}]+/u';
+    public function hiragana_to_katakana($str)
+    {
+        return mb_convert_kana($str, 'C');
+    }
 
-    //     // 正規表現にマッチするかどうかを確認
-    //     return preg_match($pattern, $str) === 1;
-    // }
+    public function isHiraganaAndKatakana($str) {
+        if (strlen($str) < 4) {
+            return 0;
+        }
+
+        // ひらがなまたはカタカナを含む正規表現
+        $pattern = '/[\p{Hiragana}\p{Katakana}]+/u';
+
+        // 正規表現にマッチするかどうかを確認
+        return preg_match($pattern, $str) === 1;
+    }
 
     // public function isHiragana($str) {
     //     // ひらがなのみを含む正規表現

@@ -48,6 +48,7 @@
         <div style="display:flex">
             <div>
                 <h2>Word</h2>
+                <p>日本語を登録する際、4文字以上の単語はひらがなではなくカタカナで登録してください</p>
                 <form action="{{ route('register-word') }}" method="POST" >
                     @csrf
                     <input type="text" name="name">
