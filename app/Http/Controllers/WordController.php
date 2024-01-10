@@ -139,4 +139,15 @@ class WordController extends Controller
         $fileName = $this->blockTarget->export("words", $path);
         return response()->download($path, $fileName, ['Content-Type: text/plain']);
     }
+
+    public function hiragana_to_katakana($str)
+    {
+        return mb_convert_kana($str, 'C');
+    }
+
+    public function isHiragana($str) {
+        $pattern = '/[\x{3040}-\x{309F}\x{30A0}-\x{30FF}a-zA-Z]+/u';
+        return preg_match($pattern, $str) === 1;
+    }
+
 }
