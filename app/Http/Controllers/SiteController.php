@@ -64,7 +64,7 @@ class SiteController extends Controller
     }
 
     public function whiteListCheck($url) {
-        $whiteList = ["detail.chiebukuro.yahoo.co.jp"];
+        $whiteList = ["detail.chiebukuro.yahoo.co.jp", "eikaiwa.dmm.com"];
         if (in_array($url, $whiteList)) {
             return true;
         }
