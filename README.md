@@ -34,6 +34,10 @@ In order to use this function, you need to get YoutubeAPI, and register it on th
 ### ・Site
 You can block sites that contain registered url.
 
+#### white-list mode**
+ユーザからは追加できないようにしている。プログラムからのみ追加可能。
+
+
 ### Functions common to the three above
 - download(export) registered data by text file
 - import text file.
@@ -88,8 +92,6 @@ php artisan queue:table
 queueを使用してyoutubechannelblockのblock メソッド内で　
 
 ## Functional Requirement I want to implement
-
-- white listとblacklist モードを切り替えれるようにする
 
 - from 日本時間9PM until 4AM, block youtube.com
 
