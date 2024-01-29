@@ -64,6 +64,7 @@ class SiteController extends Controller
         if ($url == "open.spotify.com") {
             Log::debug("阿須m機oiu");
             sleep(10);
+            Log::debug("あかさたな");
             return 1;
         }
     }
