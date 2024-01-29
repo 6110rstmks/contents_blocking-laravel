@@ -48,7 +48,7 @@ class SiteController extends Controller
         $url = $request->input('title');
         $url = preg_replace( "#^[^:/.]*[:/]+#i", "", $url );
         $urls_in_db = Site::all()->pluck("name");
-
+        Log::debug("5yu2");
         $this->spotify($title);
 
         if ($this->whiteListCheck($url)) {
