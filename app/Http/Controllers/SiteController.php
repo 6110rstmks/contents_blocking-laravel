@@ -49,7 +49,7 @@ class SiteController extends Controller
         $url = preg_replace( "#^[^:/.]*[:/]+#i", "", $url );
         $urls_in_db = Site::all()->pluck("name");
         Log::debug("5yu2");
-        $this->spotify($title);
+        $this->spotify($url);
 
         if ($this->whiteListCheck($url)) {
             return 0;
@@ -62,8 +62,8 @@ class SiteController extends Controller
         return 0;
     }
 
-    public function spotify($title) {
-        if ($title = "open.spotify.com") {
+    public function spotify($url) {
+        if ($url = "open.spotify.com") {
             Log::debug("阿須m機oiu");
             sleep(30);
             return 1;
