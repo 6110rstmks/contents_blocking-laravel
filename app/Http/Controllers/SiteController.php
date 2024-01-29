@@ -48,7 +48,9 @@ class SiteController extends Controller
         $url = $request->input('title');
         $url = preg_replace( "#^[^:/.]*[:/]+#i", "", $url );
         $urls_in_db = Site::all()->pluck("name");
-        $this->spotify($url);
+        if ($this->spotify($url)) {
+            return 1;
+        };
         if ($this->whiteListCheck($url)) {
             return 0;
         }
@@ -66,6 +68,8 @@ class SiteController extends Controller
             sleep(10);
             Log::debug("あかさたな");
             return 1;
+        } else {
+            return 0;
         }
     }
 
