@@ -48,10 +48,9 @@ class SiteController extends Controller
         $url = $request->input('title');
         $url = preg_replace( "#^[^:/.]*[:/]+#i", "", $url );
         $urls_in_db = Site::all()->pluck("name");
-        // $whiteListFlg = $this->whiteListCheck($url);
-        // if ($whiteListFlg == 0) {
-        //     return 0;
-        // }
+
+        $this->spotify($title);
+
         if ($this->whiteListCheck($url)) {
             return 0;
         }
@@ -61,6 +60,14 @@ class SiteController extends Controller
             }
         }
         return 0;
+    }
+
+    public function spotify($title) {
+        if ($title = "open.spotify.com") {
+            Log::debug("阿須m機oiu");
+            sleep(30);
+            return 1;
+        }
     }
 
     public function whiteListCheck($url) {
